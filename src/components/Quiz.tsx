@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
@@ -6,10 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Checkbox } from "@/components/ui/checkbox"
-import { submitRegistration } from '@/app/actions'
-import { AlertCircle, CheckCircle2, Info } from 'lucide-react'
-import Link from 'next/link'
+import { AlertCircle } from 'lucide-react'
 
 const questions = [
   {
@@ -75,16 +72,13 @@ const questions = [
 ]
 
 interface QuizProps {
-  onComplete?: (score: number) => void
+  onComplete: (score: number) => void;
 }
 
 export function Quiz({ onComplete }: QuizProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(questions.length).fill(-1))
-  const [showResults, setShowResults] = useState(false)
   const [showTip, setShowTip] = useState(false)
-  const [confirmationMessage, setConfirmationMessage] = useState<string | null>(null)
-  const [acceptedTerms, setAcceptedTerms] = useState(false)
 
   const handleAnswerSelection = (answerIndex: number) => {
     const newSelectedAnswers = [...selectedAnswers]
@@ -98,109 +92,12 @@ export function Quiz({ onComplete }: QuizProps) {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1)
       } else {
-        setShowResults(true)
         const score = selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length
-        if (onComplete) {
-          onComplete(score)
-        }
+        onComplete(score)
       }
     } else {
       setShowTip(true)
     }
-  }
-
-  const allCorrect = selectedAnswers.every((answer, index) => answer === questions[index].correctAnswer)
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    if (allCorrect && acceptedTerms) {
-      const formData = new FormData(event.currentTarget)
-      formData.append('quizScore', selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length.toString())
-      const result = await submitRegistration(formData)
-      setConfirmationMessage(result.message)
-    } else if (!acceptedTerms) {
-      setConfirmationMessage("Bitte akzeptieren Sie die Teilnahmebedingungen und Datenschutzbestimmungen.")
-    } else {
-      setConfirmationMessage("Bitte beantworten Sie alle Fragen korrekt, um an der Verlosung teilzunehmen.")
-    }
-  }
-
-  if (showResults) {
-    return (
-      <Card className="w-full max-w-md mx-auto">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">🏆 Ergebnis 🏆</CardTitle>
-          <CardDescription className="text-lg mt-2 text-center">Sie haben {selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length} von {questions.length} Fragen richtig beantwortet.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="mb-6 text-center">
-            <h2 className="text-2xl font-bold mb-2">Herzlichen Glückwunsch!</h2>
-            <p className="text-lg">Sie haben das Quiz erfolgreich abgeschlossen.</p>
-          </div>
-          <p className="mb-4">{allCorrect ? "Nutzen Sie jetzt die Chance, an unserer exklusiven Verlosung teilzunehmen und spannende Gadgets zu gewinnen!" : "Leider haben Sie nicht alle Fragen richtig beantwortet. Keine Sorge, Rom wurde auch nicht an einem Tag erbaut! Versuchen Sie es erneut und werden Sie zum Conversational AI-Meister!"}</p>
-          {allCorrect && !confirmationMessage && (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <Label htmlFor="firstName">Vorname</Label>
-                <input type="text" id="firstName" name="firstName" required className="w-full mt-1 px-3 py-2 bg-background border border-input rounded-md" />
-              </div>
-              <div>
-                <Label htmlFor="lastName">Nachname</Label>
-                <input type="text" id="lastName" name="lastName" required className="w-full mt-1 px-3 py-2 bg-background border border-input rounded-md" />
-              </div>
-              <div>
-                <Label htmlFor="email">E-Mail</Label>
-                <input type="email" id="email" name="email" required className="w-full mt-1 px-3 py-2 bg-background border border-input rounded-md" />
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="terms" checked={acceptedTerms} onCheckedChange={(checked) => setAcceptedTerms(checked as boolean)} />
-                <label
-                  htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Ich akzeptiere die <Link href="/teilnahmebedingungen" className="text-primary hover:underline font-semibold">Teilnahmebedingungen</Link> und <Link href="/datenschutz" className="text-primary hover:underline font-semibold">Datenschutzbestimmungen</Link>
-                </label>
-              </div>
-              <Button type="submit" className="w-full">An der Verlosung teilnehmen</Button>
-            </form>
-          )}
-          {confirmationMessage && (
-            <>
-              <div className="mt-4 p-4 bg-green-100 border-l-4 border-green-500 rounded-md" role="alert">
-                <div className="flex">
-                  <div className="flex-shrink-0">
-                    <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-sm text-green-700">{confirmationMessage}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 p-4 bg-blue-100 border-l-4 border-blue-500 rounded-md" role="alert">
-                <div className="flex">
-                  <div className="flex-shrink-0">
-                    <Info className="h-5 w-5 text-blue-500" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-sm text-blue-700">
-                      Die Gewinner werden täglich am 20. und 21. November um 16:30 Uhr am Deloitte Stand ausgelost. 
-                      Wir werden alle Gewinner auch per E-Mail informieren. Mögen die Algorithmen mit Ihnen sein!
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-        </CardContent>
-        <CardFooter>
-          {!allCorrect && (
-            <Button onClick={() => {setCurrentQuestion(0); setSelectedAnswers(new Array(questions.length).fill(-1)); setShowResults(false); setConfirmationMessage(null);}} className="w-full">
-              Quiz erneut starten
-            </Button>
-          )}
-        </CardFooter>
-      </Card>
-    )
   }
 
   return (
