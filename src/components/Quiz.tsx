@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Button } from "@/components/ui/button"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
@@ -75,10 +75,23 @@ interface QuizProps {
   onComplete: (score: number) => void;
 }
 
-export function Quiz({ onComplete }: QuizProps) {
+export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(questions.length).fill(-1))
   const [showTip, setShowTip] = useState(false)
+
+  const buttonText = useMemo(() => {
+    const phrases = [
+      "Weiter geht's!",
+      "Nächste Runde!",
+      "Auf zur nächsten Frage!",
+      "Zeig's uns!",
+      "Auf zum Gipfel!",
+      "Keine Bremsen!",
+      "Nächster Schritt!"
+    ];
+    return phrases[currentQuestion % phrases.length];
+  }, [currentQuestion]);
 
   const handleAnswerSelection = (answerIndex: number) => {
     const newSelectedAnswers = [...selectedAnswers]
@@ -90,7 +103,7 @@ export function Quiz({ onComplete }: QuizProps) {
   const handleNextQuestion = () => {
     if (selectedAnswers[currentQuestion] === questions[currentQuestion].correctAnswer) {
       if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(currentQuestion + 1)
+        setCurrentQuestion(prevQuestion => prevQuestion + 1)
       } else {
         const score = selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length
         onComplete(score)
@@ -100,12 +113,9 @@ export function Quiz({ onComplete }: QuizProps) {
     }
   }
 
-  const getButtonText = () => {
-    if (currentQuestion < questions.length - 1) {
-      return "Nächste Frage (Keine Sorge, es wird nicht schwerer... vielleicht)"
-    } else {
-      return "Quiz beenden (Jetzt wird's spannend!)"
-    }
+  const progressStyle: React.CSSProperties = {
+    backgroundColor: 'rgba(59, 130, 246, 0.5)', // Light blue background
+    '--tw-progress-fill': 'rgb(0, 99, 155)' // Maritime blue fill
   }
 
   return (
@@ -117,7 +127,7 @@ export function Quiz({ onComplete }: QuizProps) {
         <Progress 
           value={(currentQuestion / questions.length) * 100} 
           className="w-full" 
-          style={{ backgroundColor: 'rgba(59, 130, 246, 0.5)' }} // Light blue background
+          style={progressStyle} 
         />
       </CardHeader>
       <CardContent>
@@ -144,8 +154,11 @@ export function Quiz({ onComplete }: QuizProps) {
         )}
       </CardContent>
       <CardFooter>
-        <Button onClick={handleNextQuestion} className="w-full">
-          {getButtonText()}
+        <Button 
+          onClick={handleNextQuestion} 
+          className="w-full bg-blue-100 hover:bg-blue-200 text-blue-800"
+        >
+          {currentQuestion < questions.length - 1 ? buttonText : "Quiz beenden!"}
         </Button>
       </CardFooter>
     </Card>

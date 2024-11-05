@@ -48,32 +48,59 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
         </div>
         <p className="mb-4">{allCorrect ? "Nutzen Sie jetzt die Chance, an unserer exklusiven Verlosung teilzunehmen und spannende Gadgets zu gewinnen!" : "Leider haben Sie nicht alle Fragen richtig beantwortet. Keine Sorge, Rom wurde auch nicht an einem Tag erbaut! Versuchen Sie es erneut und werden Sie zum Conversational AI-Meister!"}</p>
         {allCorrect && !confirmationMessage && (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <Label htmlFor="firstName">Vorname</Label>
-              <Input id="firstName" name="firstName" required />
-            </div>
-            <div>
-              <Label htmlFor="lastName">Nachname</Label>
-              <Input id="lastName" name="lastName" required />
-            </div>
-            <div>
-              <Label htmlFor="email">E-Mail</Label>
-              <Input id="email" name="email" type="email" required />
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="terms" checked={acceptedTerms} onCheckedChange={(checked) => setAcceptedTerms(checked as boolean)} />
-              <label
-                htmlFor="terms"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-8">
+            <form onSubmit={handleSubmit} className="grid gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="firstName" className="text-sm font-medium text-gray-700">Vorname</Label>
+                <Input 
+                  id="firstName" 
+                  name="firstName" 
+                  required 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastName" className="text-sm font-medium text-gray-700">Nachname</Label>
+                <Input 
+                  id="lastName" 
+                  name="lastName" 
+                  required 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-sm font-medium text-gray-700">E-Mail</Label>
+                <Input 
+                  id="email" 
+                  name="email" 
+                  type="email" 
+                  required 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div className="flex items-start space-x-2">
+                <Checkbox 
+                  id="terms" 
+                  checked={acceptedTerms} 
+                  onCheckedChange={(checked) => setAcceptedTerms(checked as boolean)}
+                  className="mt-1"
+                />
+                <label
+                  htmlFor="terms"
+                  className="text-sm text-gray-600"
+                >
+                  Ich akzeptiere die <Link href="/teilnahmebedingungen" className="text-blue-600 hover:underline font-semibold">Teilnahmebedingungen</Link> und <Link href="/datenschutz" className="text-blue-600 hover:underline font-semibold">Datenschutzbestimmungen</Link>
+                </label>
+              </div>
+              <Button 
+                type="submit" 
+                className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                disabled={isSubmitting}
               >
-                Ich akzeptiere die <Link href="/teilnahmebedingungen" className="text-primary hover:underline font-semibold">Teilnahmebedingungen</Link> und <Link href="/datenschutz" className="text-primary hover:underline font-semibold">Datenschutzbestimmungen</Link>
-              </label>
-            </div>
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? 'Wird verarbeitet...' : 'An der Verlosung teilnehmen'}
-            </Button>
-          </form>
+                {isSubmitting ? 'Wird verarbeitet...' : 'An der Verlosung teilnehmen'}
+              </Button>
+            </form>
+          </div>
         )}
         {confirmationMessage && (
           <>
@@ -95,7 +122,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
                 <div className="ml-3">
                   <p className="text-sm text-blue-700">
                     Die Gewinner werden täglich am 20. und 21. November um 16:30 Uhr am Deloitte Stand ausgelost. 
-                    Wir werden alle Gewinner auch per E-Mail informieren. Viel Glück!
+                    Wir werden alle Gewinner auch per E-Mail informieren. Mögen die Algorithmen mit Ihnen sein!
                   </p>
                 </div>
               </div>
