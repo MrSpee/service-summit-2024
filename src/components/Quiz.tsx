@@ -100,15 +100,28 @@ export function Quiz({ onComplete }: QuizProps) {
     }
   }
 
+  const getButtonText = () => {
+    if (currentQuestion < questions.length - 1) {
+      return "Nächste Frage (Keine Sorge, es wird nicht schwerer... vielleicht)"
+    } else {
+      return "Quiz beenden (Jetzt wird's spannend!)"
+    }
+  }
+
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto shadow-lg">
       <CardHeader>
-        <CardTitle className="text-xl font-bold">{questions[currentQuestion].topic}</CardTitle>
-        <Progress value={(currentQuestion / questions.length) * 100} className="w-full" />
-        <h2 className="text-lg font-semibold mt-2">Frage {currentQuestion + 1}</h2>
+        <CardTitle className="text-xl font-bold">
+          Frage {currentQuestion + 1} ({questions[currentQuestion].topic})
+        </CardTitle>
+        <Progress 
+          value={(currentQuestion / questions.length) * 100} 
+          className="w-full" 
+          style={{ backgroundColor: 'rgba(59, 130, 246, 0.5)' }} // Light blue background
+        />
       </CardHeader>
       <CardContent>
-        <p className="mb-4 text-lg">{questions[currentQuestion].question}</p>
+        <p className="mb-4 text-lg font-semibold">{questions[currentQuestion].question}</p>
         <RadioGroup value={selectedAnswers[currentQuestion].toString()} onValueChange={(value) => handleAnswerSelection(parseInt(value))} className="space-y-2">
           {questions[currentQuestion].options.map((option, index) => (
             <div key={index} className="flex items-center space-x-2 p-2 rounded-md hover:bg-accent">
@@ -132,7 +145,7 @@ export function Quiz({ onComplete }: QuizProps) {
       </CardContent>
       <CardFooter>
         <Button onClick={handleNextQuestion} className="w-full">
-          {currentQuestion < questions.length - 1 ? "Nächste Frage" : "Quiz beenden"}
+          {getButtonText()}
         </Button>
       </CardFooter>
     </Card>
