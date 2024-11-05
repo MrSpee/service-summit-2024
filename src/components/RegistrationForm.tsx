@@ -31,30 +31,30 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-6">
       <h3 className="text-lg font-semibold mb-4">
-        Wow! Sie haben {score}/{totalQuestions} Punkten erreicht. Sind Sie sicher, dass Sie nicht heimlich eine KI sind?
+        Beeindruckend! Sie haben {score} von {totalQuestions} Punkten erreicht. Ihr Fachwissen im Bereich KI ist wirklich herausragend.
       </h3>
-      <p className="mb-4">Jetzt schnell registrieren und die Chance auf tolle Preise sichern:</p>
+      <p className="mb-4">Nutzen Sie jetzt die Gelegenheit, sich für exklusive Preise zu qualifizieren:</p>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <Label htmlFor="firstName">Vorname (oder KI-Modellnummer)</Label>
+          <Label htmlFor="firstName">Vorname</Label>
           <Input id="firstName" name="firstName" required />
         </div>
         <div>
-          <Label htmlFor="lastName">Nachname (falls Sie kein Chatbot sind)</Label>
+          <Label htmlFor="lastName">Nachname</Label>
           <Input id="lastName" name="lastName" required />
         </div>
         <div>
-          <Label htmlFor="email">E-Mail (Bitte keine Spam-Bots!)</Label>
+          <Label htmlFor="email">E-Mail-Adresse</Label>
           <Input id="email" name="email" type="email" required />
         </div>
         <div className="flex items-center space-x-2">
           <input type="checkbox" id="consent" name="consent" required className="h-4 w-4 rounded border-gray-300" />
           <Label htmlFor="consent" className="text-sm">
-            Ich akzeptiere die Teilnahmebedingungen und verspreche, meine neuen KI-Superkräfte nur für Gutes einzusetzen
+            Ich stimme den Teilnahmebedingungen zu und verpflichte mich, mein KI-Wissen verantwortungsvoll einzusetzen
           </Label>
         </div>
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Ihre Daten werden von unserer KI verarbeitet...' : 'Jetzt für die Verlosung registrieren und Daumen drücken!'}
+          {isSubmitting ? 'Ihre Anmeldung wird verarbeitet...' : 'Jetzt für die exklusive Verlosung registrieren'}
         </Button>
       </form>
       {submitMessage && <p className="mt-4 text-sm text-green-600">{submitMessage}</p>}
