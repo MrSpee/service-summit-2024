@@ -5,8 +5,14 @@ import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
 import { submitRegistration } from '@/app/actions'
+import React from 'react'
 
-export function RegistrationForm({ score }: { score: number }) {
+interface RegistrationFormProps {
+  score: number
+  totalQuestions: number
+}
+
+export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, totalQuestions }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitMessage, setSubmitMessage] = useState('')
 
@@ -25,7 +31,7 @@ export function RegistrationForm({ score }: { score: number }) {
   return (
     <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-6">
       <h3 className="text-lg font-semibold mb-4">
-        Wow! Sie haben {score}/3 Punkten erreicht. Sind Sie sicher, dass Sie nicht heimlich eine KI sind?
+        Wow! Sie haben {score}/{totalQuestions} Punkten erreicht. Sind Sie sicher, dass Sie nicht heimlich eine KI sind?
       </h3>
       <p className="mb-4">Jetzt schnell registrieren und die Chance auf tolle Preise sichern:</p>
       <form onSubmit={handleSubmit} className="space-y-4">

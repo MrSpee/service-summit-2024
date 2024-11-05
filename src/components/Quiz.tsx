@@ -74,7 +74,11 @@ const questions = [
   }
 ]
 
-export function Quiz() {
+interface QuizProps {
+  onComplete?: (score: number) => void
+}
+
+export function Quiz({ onComplete }: QuizProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(questions.length).fill(-1))
   const [showResults, setShowResults] = useState(false)
@@ -95,6 +99,10 @@ export function Quiz() {
         setCurrentQuestion(currentQuestion + 1)
       } else {
         setShowResults(true)
+        const score = selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length
+        if (onComplete) {
+          onComplete(score)
+        }
       }
     } else {
       setShowTip(true)
