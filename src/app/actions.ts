@@ -9,9 +9,17 @@ export async function submitRegistration(formData: FormData) {
   const email = formData.get('email') as string
   const quizScore = parseInt(formData.get('quizScore') as string, 10)
 
+  await addLead({
+    firstName,
+    lastName,
+    email,
+    quizScore,
+    registrationDate: new Date().toISOString(),
+    inDraw: true,
+  })
 
   revalidatePath('/')
-  return { message: 'Vielen Dank für Ihre Teilnahme! Ihre Registrierung wurde erfolgreich abgeschlossen.' }
+  return { message: 'Fantastisch! Sie sind jetzt offiziell im Rennen um den Titel "KI-Flüsterer des Jahres". Mögen die Algorithmen mit Ihnen sein!' }
 }
 
 export async function getLeads(): Promise<Lead[]> {
@@ -24,11 +32,11 @@ export async function updateLeadAction(id: string, formData: FormData) {
 
   await updateLead(id, { notes, inDraw })
   revalidatePath('/admin')
-  return { message: 'Lead erfolgreich aktualisiert. Vielen Dank für Ihre sorgfältige Arbeit.' }
+  return { message: 'Lead erfolgreich aktualisiert. Die KI ist beeindruckt von Ihrer Effizienz!' }
 }
 
 export async function deleteLeadAction(id: string) {
   await deleteLead(id)
   revalidatePath('/admin')
-  return { message: 'Lead erfolgreich gelöscht. Hoffen wir, es war kein zukünftiger Tech-Milliardär!' }
+  return { message: 'Lead erfolgreich gelöscht.' }
 }
