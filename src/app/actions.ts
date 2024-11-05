@@ -9,7 +9,7 @@ export async function submitRegistration(formData: FormData) {
   const email = formData.get('email') as string
   const quizScore = parseInt(formData.get('quizScore') as string, 10)
 
-  const leadId = await addLead({
+  await addLead({
     firstName,
     lastName,
     email,
@@ -27,13 +27,10 @@ export async function getLeads(): Promise<Lead[]> {
 }
 
 export async function updateLeadAction(id: string, formData: FormData) {
-  const firstName = formData.get('firstName') as string
-  const lastName = formData.get('lastName') as string
-  const email = formData.get('email') as string
   const notes = formData.get('notes') as string
   const inDraw = formData.get('inDraw') === 'on'
 
-  await updateLead(id, { firstName, lastName, email, notes, inDraw })
+  await updateLead(id, { notes, inDraw })
   revalidatePath('/admin')
   return { message: 'Lead erfolgreich aktualisiert. Die KI ist beeindruckt von Ihrer Effizienz!' }
 }
@@ -41,5 +38,5 @@ export async function updateLeadAction(id: string, formData: FormData) {
 export async function deleteLeadAction(id: string) {
   await deleteLead(id)
   revalidatePath('/admin')
-  return { message: 'Lead erfolgreich gelöscht. Hoffen wir, es war kein zukünftiger Tech-Milliardär!' }
+  return { message: 'Lead erfolgreich gelöscht.' }
 }
