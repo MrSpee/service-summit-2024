@@ -9,14 +9,6 @@ export async function submitRegistration(formData: FormData) {
   const email = formData.get('email') as string
   const quizScore = parseInt(formData.get('quizScore') as string, 10)
 
-  const leadId = await addLead({
-    firstName,
-    lastName,
-    email,
-    quizScore,
-    registrationDate: new Date().toISOString(),
-    inDraw: true,
-  })
 
   revalidatePath('/')
   return { message: 'Vielen Dank für Ihre Teilnahme! Ihre Registrierung wurde erfolgreich abgeschlossen.' }
