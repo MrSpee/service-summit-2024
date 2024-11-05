@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { useState, useMemo } from 'react'
 import { Button } from "@/components/ui/button"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -7,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { AlertCircle } from 'lucide-react'
+import { cn } from "@/lib/utils"
 
 const questions = [
   {
@@ -71,6 +73,8 @@ const questions = [
   }
 ]
 
+const ProgressBar = Progress
+
 interface QuizProps {
   onComplete: (score: number) => void;
 }
@@ -116,22 +120,15 @@ export function Quiz({ onComplete }: QuizProps) {
     }
   }
 
-  const progressStyle: React.CSSProperties = {
-    backgroundColor: 'rgba(59, 130, 246, 0.5)', // Light blue background
-    '--tw-progress-fill': 'rgb(0, 99, 155)' as any // Maritime blue fill
-  }
-
-
   return (
     <Card className="w-full max-w-md mx-auto shadow-lg">
       <CardHeader>
         <CardTitle className="text-xl font-bold">
           Frage {currentQuestion + 1} ({questions[currentQuestion].topic})
         </CardTitle>
-        <Progress 
+        <ProgressBar 
           value={(currentQuestion / questions.length) * 100} 
           className="w-full" 
-          style={progressStyle}
         />
       </CardHeader>
       <CardContent>
