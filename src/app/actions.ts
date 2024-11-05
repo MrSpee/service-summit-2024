@@ -19,7 +19,7 @@ export async function submitRegistration(formData: FormData) {
   })
 
   revalidatePath('/')
-  return { message: 'Fantastisch! Sie sind jetzt offiziell im Rennen um den Titel "KI-Flüsterer des Jahres". Mögen die Algorithmen mit Ihnen sein!' }
+  return { message: 'Vielen Dank für Ihre Teilnahme. Ihre Registrierung wurde erfolgreich abgeschlossen.' }
 }
 
 export async function getLeads(): Promise<Lead[]> {
@@ -32,7 +32,7 @@ export async function updateLeadAction(id: string, formData: FormData) {
 
   await updateLead(id, { notes, inDraw })
   revalidatePath('/admin')
-  return { message: 'Lead erfolgreich aktualisiert. Die KI ist beeindruckt von Ihrer Effizienz!' }
+  return { message: 'Lead erfolgreich aktualisiert. Vielen Dank für Ihre sorgfältige Arbeit.' }
 }
 
 export async function deleteLeadAction(id: string) {
