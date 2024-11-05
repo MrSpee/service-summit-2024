@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
@@ -8,7 +8,7 @@ import { Checkbox } from './ui/checkbox'
 import { submitRegistration } from '@/app/actions'
 import React from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "./ui/card"
-import { CheckCircle2, Info } from 'lucide-react'
+import { CheckCircle2, Info, AlertTriangle } from 'lucide-react'
 import Link from 'next/link'
 
 interface RegistrationFormProps {
@@ -20,9 +20,32 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [confirmationMessage, setConfirmationMessage] = useState<string | null>(null)
   const [acceptedTerms, setAcceptedTerms] = useState(false)
+  const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState<string | null>(null)
+
+  const validateEmail = (email: string) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    if (!email) {
+      setEmailError('E-Mail-Adresse ist erforderlich')
+    } else if (!regex.test(email)) {
+      setEmailError('Ungültige E-Mail-Adresse')
+    } else {
+      setEmailError(null)
+    }
+  }
+
+  useEffect(() => {
+    if (email) {
+      validateEmail(email)
+    }
+  }, [email])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    validateEmail(email)
+    if (emailError) {
+      return
+    }
     setIsSubmitting(true)
 
     const formData = new FormData(event.currentTarget)
@@ -75,8 +98,19 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
                   name="email" 
                   type="email" 
                   required 
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onBlur={() => validateEmail(email)}
+                  className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                    emailError ? 'border-red-500' : 'border-gray-300'
+                  }`}
                 />
+                {emailError && (
+                  <div className="text-red-500 text-sm mt-1 flex items-center">
+                    <AlertTriangle className="w-4 h-4 mr-1" />
+                    {emailError}
+                  </div>
+                )}
               </div>
               <div className="flex items-start space-x-2">
                 <Checkbox 
@@ -95,7 +129,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
               <Button 
                 type="submit" 
                 className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !!emailError || !acceptedTerms}
               >
                 {isSubmitting ? 'Wird verarbeitet...' : 'An der Verlosung teilnehmen'}
               </Button>

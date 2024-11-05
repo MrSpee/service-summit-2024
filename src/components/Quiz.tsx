@@ -75,7 +75,7 @@ interface QuizProps {
   onComplete: (score: number) => void;
 }
 
-export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
+export function Quiz({ onComplete }: QuizProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(questions.length).fill(-1))
   const [showTip, setShowTip] = useState(false)
@@ -84,11 +84,14 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
     const phrases = [
       "Weiter geht's!",
       "Nächste Runde!",
-      "Auf zur nächsten Frage!",
+      "Vorwärts, Genie!",
       "Zeig's uns!",
       "Auf zum Gipfel!",
       "Keine Bremsen!",
-      "Nächster Schritt!"
+      "Volles Risiko!",
+      "Nächster Streich!",
+      "Volle Kraft!",
+      "Zünde Stufe 2!"
     ];
     return phrases[currentQuestion % phrases.length];
   }, [currentQuestion]);
@@ -115,8 +118,9 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
 
   const progressStyle: React.CSSProperties = {
     backgroundColor: 'rgba(59, 130, 246, 0.5)', // Light blue background
-    '--tw-progress-fill': 'rgb(0, 99, 155)' // Maritime blue fill
+    '--tw-progress-fill': 'rgb(0, 99, 155)' as any // Maritime blue fill
   }
+
 
   return (
     <Card className="w-full max-w-md mx-auto shadow-lg">
@@ -127,7 +131,7 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
         <Progress 
           value={(currentQuestion / questions.length) * 100} 
           className="w-full" 
-          style={progressStyle} 
+          style={progressStyle}
         />
       </CardHeader>
       <CardContent>
