@@ -2,15 +2,22 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import { getLeads, updateLeadAction } from '@/app/actions'
 import { Lead } from '@/lib/kv-utils'
 import confetti from 'canvas-confetti'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
-const emojis = ['😎', '🦸', '🚀', '💡', '🔥', '⚡', '🌟', '🦾', '🧠', '🔮']
+const emojis = ['😎', '🦸', '🚀', '💡', '🔥', '⚡', '🌟', '🦾', '🧠', '🔮', '🤖', '💬', '🗨️', '📱', '💻', '🎙️', '🔊', '👾', '🤯', '🌈', '🎭', '🎮', '🕹️', '📡', '🛰️', '🔬', '🔭', '💎', '🔋', '🔌']
+
 const superheroNames = [
-  'Captain Awesome', 'Wonder Whiz', 'Mega Mind', 'Sonic Boom', 'Pixel Ninja',
-  'Data Dynamo', 'Code Crusher', 'Logic Laser', 'Quantum Quasar', 'Cyber Sentinel'
+  'Captain Chatbot', 'Wonder AI', 'Iron Logic', 'The Incredible Code', 'Spider-Network',
+  'Black Bandwidth', 'Thor Thunderscript', 'Doctor Strange Query', 'Ant-Algorithm',
+  'Scarlet Syntax', 'Vision Voice', 'Hulk Heuristic', 'Falcon Function', 'Winter Webhook',
+  'Star-Lord String', 'Gamora GPU', 'Drax Data', 'Rocket RAM', 'Groot Graph',
+  'Wasp Widget', 'Hawkeye Hash', 'Black Panther Processor', 'Captain Compiler',
+  'Bucky Buffer', 'Loki Loop', 'Nebula Neural Net', 'Mantis Machine Learning',
+  'Valkyrie Variable', 'Okoye Object', 'Shuri Shader'
 ]
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -22,12 +29,42 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled
 }
 
+const ParticipantCard: React.FC<{ participant: Lead, isRevealed: boolean, index: number }> = ({ participant, isRevealed, index }) => {
+  return (
+    <div className="card-container">
+      <motion.div
+        className="card-inner"
+        initial={false}
+        animate={{ rotateY: isRevealed ? 180 : 0 }}
+        transition={{ duration: 0.6, type: 'spring', stiffness: 260, damping: 20 }}
+      >
+        <Card className="card-face card-back bg-gradient-to-b from-black to-blue-600">
+          <CardContent className="flex items-center justify-center h-full">
+            <div className="rounded-full bg-white p-2">
+              <img src="/Bot_Cartoon.png" alt="Bot Cartoon" className="w-16 h-16" />
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="card-face card-front">
+          <CardContent className="flex flex-col items-center justify-center h-full">
+            <p className="text-3xl mb-2">{emojis[index % emojis.length]}</p>
+            <p className="font-bold text-lg mb-1">{participant.firstName}</p>
+            <p className="text-xs text-gray-600">{superheroNames[index % superheroNames.length]}</p>
+          </CardContent>
+        </Card>
+      </motion.div>
+    </div>
+  )
+}
+
 export default function RafflePage() {
   const [participants, setParticipants] = useState<Lead[]>([])
   const [winners, setWinners] = useState<Lead[]>([])
   const [isRaffleInProgress, setIsRaffleInProgress] = useState(false)
   const [raffleComplete, setRaffleComplete] = useState(false)
   const [participantCount, setParticipantCount] = useState(0)
+  const [revealedCards, setRevealedCards] = useState<string[]>([])
+  const [isRevealing, setIsRevealing] = useState(false)
 
   useEffect(() => {
     const fetchParticipants = async () => {
@@ -39,7 +76,29 @@ export default function RafflePage() {
     fetchParticipants()
   }, [])
 
+  const revealCards = () => {
+    setIsRevealing(true)
+    const shuffledParticipants = shuffleArray([...participants])
+    const revealDuration = 10000 // 10 seconds
+    const intervalDuration = revealDuration / shuffledParticipants.length
+
+    shuffledParticipants.forEach((participant, index) => {
+      setTimeout(() => {
+        setRevealedCards(prev => [...prev, participant.id])
+        if (index === shuffledParticipants.length - 1) {
+          setIsRevealing(false)
+        }
+      }, index * intervalDuration)
+    })
+  }
+
   const startRaffle = () => {
+    if (isRevealing) return
+    if (revealedCards.length === 0) {
+      revealCards()
+      return
+    }
+
     setIsRaffleInProgress(true)
     const shuffledParticipants = shuffleArray([...participants])
     const selectedWinners = shuffledParticipants.slice(0, 3)
@@ -55,7 +114,6 @@ export default function RafflePage() {
             spread: 70,
             origin: { y: 0.6 }
           })
-          // Update the winner status in the database
           await updateLeadAction(winner.id, { isWinner: true })
           revealWinners(index + 1)
         }, 2000)
@@ -80,21 +138,14 @@ export default function RafflePage() {
               <h3 className="text-3xl font-bold mb-4">Unsere Gewinner</h3>
               <div className="flex justify-center space-x-4">
                 {winners.map((winner, index) => (
-                  <motion.div
-                    key={winner.id}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.5 }}
-                    className="bg-white p-4 rounded-lg shadow-lg text-center w-64 h-64 flex flex-col justify-between border-4 border-yellow-400 animate-pulse"
-                  >
-                    <p className="text-4xl mb-2">{emojis[index % emojis.length]}</p>
-                    <div>
-                      <p className="font-bold text-xl">{winner.firstName}</p>
-                      <p className="font-bold text-lg">{winner.lastName}</p>
-                    </div>
-                    <p className="text-sm text-gray-600">{superheroNames[index % superheroNames.length]}</p>
-                    <p className="text-lg text-yellow-600 mt-2">Gewinner {index + 1}</p>
-                  </motion.div>
+                  <Card key={winner.id} className="p-4 w-64 h-64 flex flex-col justify-between border-4 border-yellow-400 animate-pulse">
+                    <CardContent>
+                      <p className="text-4xl mb-2">{emojis[index % emojis.length]}</p>
+                      <p className="font-bold text-xl">{winner.firstName} {winner.lastName}</p>
+                      <p className="text-sm text-gray-600">{superheroNames[index % superheroNames.length]}</p>
+                      <p className="text-lg text-yellow-600 mt-2">Gewinner {index + 1}</p>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
             </div>
@@ -112,28 +163,54 @@ export default function RafflePage() {
             disabled={isRaffleInProgress || raffleComplete || participants.length < 3}
             className="text-2xl py-6 px-12 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-all duration-200 transform hover:scale-105 mb-4"
           >
-            {isRaffleInProgress ? 'Verlosung läuft...' : 
-             raffleComplete ? 'Verlosung abgeschlossen' : 'Verlosung starten'}
+            {isRevealing ? 'Karten werden aufgedeckt...' :
+             isRaffleInProgress ? 'Verlosung läuft...' : 
+             raffleComplete ? 'Verlosung abgeschlossen' : 
+             revealedCards.length === 0 ? 'Spielkarten aufdecken' : 'Verlosung starten'}
           </Button>
           
-          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2">
-            <AnimatePresence>
-              {participants.map((participant, index) => (
-                <motion.div
-                  key={participant.id}
-                  exit={{ scale: 0, opacity: 0 }}
-                  layout
-                  className="bg-white p-2 rounded-lg shadow-lg text-center aspect-[3/4] flex flex-col justify-between"
-                >
-                  <p className="text-2xl">{emojis[index % emojis.length]}</p>
-                  <p className="font-bold text-xs">{participant.firstName}</p>
-                  <p className="text-xs text-gray-600">{superheroNames[index % superheroNames.length]}</p>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4">
+            {participants.map((participant, index) => (
+              <ParticipantCard
+                key={participant.id}
+                participant={participant}
+                isRevealed={revealedCards.includes(participant.id)}
+                index={index}
+              />
+            ))}
           </div>
         </section>
       </main>
+      <style jsx global>{`
+        .card-container {
+          width: 120px;
+          height: 160px;
+          perspective: 1000px;
+        }
+        .card-inner {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          transition: transform 0.6s;
+          transform-style: preserve-3d;
+        }
+        .card-face {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          backface-visibility: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .card-back {
+          color: white;
+        }
+        .card-front {
+          background-color: white;
+          transform: rotateY(180deg);
+        }
+      `}</style>
     </div>
   )
 }
