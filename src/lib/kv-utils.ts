@@ -1,14 +1,15 @@
 import { kv } from '@vercel/kv'
 
-export interface Lead {
+export type Lead = {
   id: string
   firstName: string
   lastName: string
   email: string
-  registrationDate: string
   quizScore: number
-  notes?: string
+  registrationDate: string
   inDraw: boolean
+  notes?: string
+  isWinner: boolean // Add this line
 }
 
 export async function addLead(lead: Omit<Lead, 'id'>): Promise<string> {

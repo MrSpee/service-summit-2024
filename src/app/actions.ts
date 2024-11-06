@@ -16,6 +16,7 @@ export async function submitRegistration(formData: FormData) {
     quizScore,
     registrationDate: new Date().toISOString(),
     inDraw: true,
+    isWinner: false,
   })
 
   revalidatePath('/')
@@ -26,12 +27,22 @@ export async function getLeads(): Promise<Lead[]> {
   return getAllLeads()
 }
 
-export async function updateLeadAction(id: string, formData: FormData) {
-  const notes = formData.get('notes') as string
-  const inDraw = formData.get('inDraw') === 'on'
+export async function updateLeadAction(id: string, data: FormData | Partial<Lead>) {
+  let updateData: Partial<Lead>
 
-  await updateLead(id, { notes, inDraw })
+  if (data instanceof FormData) {
+    updateData = {
+      notes: data.get('notes') as string | undefined,
+      inDraw: data.get('inDraw') === 'on',
+      isWinner: data.get('isWinner') === 'on',
+    }
+  } else {
+    updateData = data
+  }
+
+  await updateLead(id, updateData)
   revalidatePath('/admin')
+  revalidatePath('/verlosung')
   return { message: 'Lead erfolgreich aktualisiert. Vielen Dank für Ihre sorgfältige Arbeit.' }
 }
 
@@ -39,4 +50,11 @@ export async function deleteLeadAction(id: string) {
   await deleteLead(id)
   revalidatePath('/admin')
   return { message: 'Lead erfolgreich gelöscht.' }
+}
+
+export async function updateWinnerStatus(id: string, isWinner: boolean) {
+  await updateLead(id, { isWinner })
+  revalidatePath('/admin')
+  revalidatePath('/verlosung')
+  return { message: isWinner ? 'Gewinner erfolgreich markiert.' : 'Gewinnerstatus erfolgreich entfernt.' }
 }
