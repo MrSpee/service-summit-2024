@@ -74,10 +74,43 @@ export default function RafflePage() {
         <section className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-2">Deloitte & Cognigy - Conversational AI Quiz</h1>
           <h2 className="text-2xl mb-8">Verlosung unter {participantCount} Teilnehmer</h2>
+          
+          {winners.length > 0 && (
+            <div className="mb-8">
+              <h3 className="text-3xl font-bold mb-4">Unsere Gewinner</h3>
+              <div className="flex justify-center space-x-4">
+                {winners.map((winner, index) => (
+                  <motion.div
+                    key={winner.id}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className="bg-white p-4 rounded-lg shadow-lg text-center w-64 h-64 flex flex-col justify-between border-4 border-yellow-400 animate-pulse"
+                  >
+                    <p className="text-4xl mb-2">{emojis[index % emojis.length]}</p>
+                    <div>
+                      <p className="font-bold text-xl">{winner.firstName}</p>
+                      <p className="font-bold text-lg">{winner.lastName}</p>
+                    </div>
+                    <p className="text-sm text-gray-600">{superheroNames[index % superheroNames.length]}</p>
+                    <p className="text-lg text-yellow-600 mt-2">Gewinner {index + 1}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {raffleComplete && (
+            <section className="mb-8 text-center">
+              <h3 className="text-2xl font-bold mb-4">Herzlichen Glückwunsch!</h3>
+              <p className="text-xl">Bitte holt eure Gewinne am Deloitte Stand ab.</p>
+            </section>
+          )}
+
           <Button 
             onClick={startRaffle} 
             disabled={isRaffleInProgress || raffleComplete || participants.length < 3}
-            className="text-2xl py-6 px-12 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-all duration-200 transform hover:scale-105 mb-8"
+            className="text-2xl py-6 px-12 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-all duration-200 transform hover:scale-105 mb-4"
           >
             {isRaffleInProgress ? 'Verlosung läuft...' : 
              raffleComplete ? 'Verlosung abgeschlossen' : 'Verlosung starten'}
@@ -100,38 +133,6 @@ export default function RafflePage() {
             </AnimatePresence>
           </div>
         </section>
-
-        {winners.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-center">Unsere Gewinner</h2>
-            <div className="flex justify-center space-x-4">
-              {winners.map((winner, index) => (
-                <motion.div
-                  key={winner.id}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="bg-white p-4 rounded-lg shadow-lg text-center w-64 h-64 flex flex-col justify-between border-4 border-yellow-400 animate-pulse"
-                >
-                  <p className="text-4xl mb-2">{emojis[index % emojis.length]}</p>
-                  <div>
-                    <p className="font-bold text-xl">{winner.firstName}</p>
-                    <p className="font-bold text-lg">{winner.lastName}</p>
-                  </div>
-                  <p className="text-sm text-gray-600">{superheroNames[index % superheroNames.length]}</p>
-                  <p className="text-lg text-yellow-600 mt-2">Gewinner {index + 1}</p>
-                </motion.div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {raffleComplete && (
-          <section className="mt-8 text-center">
-            <h3 className="text-2xl font-bold mb-4">Herzlichen Glückwunsch an alle Gewinner!</h3>
-            <p className="text-xl">Bitte holt eure Gewinne am Empfang ab.</p>
-          </section>
-        )}
       </main>
     </div>
   )
