@@ -76,6 +76,12 @@ export default function RafflePage() {
     fetchParticipants()
   }, [])
 
+  const calculateWinningChance = (totalParticipants: number, numberOfPrizes: number = 3): string => {
+    if (totalParticipants === 0) return '0%'
+    const chance = (numberOfPrizes / totalParticipants) * 100
+    return chance.toFixed(2) + '%'
+  }
+
   const revealCards = () => {
     setIsRevealing(true)
     const shuffledParticipants = shuffleArray([...participants])
@@ -131,7 +137,8 @@ export default function RafflePage() {
       <main className="flex-grow container mx-auto px-4 py-8">
         <section className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-2">Deloitte & Cognigy - Conversational AI Quiz</h1>
-          <h2 className="text-2xl mb-8">Verlosung unter {participantCount} Teilnehmer</h2>
+          <h2 className="text-2xl mb-4">Verlosung der 3 Hauptgewinne unter {participantCount} Teilnehmer</h2>
+          <p className="text-xl mb-8">Deine Gewinnchance ist: {calculateWinningChance(participantCount)}</p>
           
           {winners.length > 0 && (
             <div className="mb-8">
