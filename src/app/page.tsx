@@ -20,7 +20,7 @@ export default function LandingPage() {
         <Card className="max-w-3xl mx-auto">
           <CardHeader>
             <CardTitle className="text-xl text-center">
-              Deloitte & Cognigy<br />präsentieren das ultimative Conversational AI Quiz
+              Deloitte & Cognigy präsentieren<br />das ultimative Conversational AI Quiz<br />mit tollen Preisen.<br />Teste dein Wissen!
             </CardTitle>
           </CardHeader>
           <CardContent>
