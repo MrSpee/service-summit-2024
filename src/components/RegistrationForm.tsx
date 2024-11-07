@@ -20,6 +20,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [confirmationMessage, setConfirmationMessage] = useState<string | null>(null)
   const [acceptedTerms, setAcceptedTerms] = useState(false)
+  const [acceptedContact, setAcceptedContact] = useState(false) // Added state for contact consent
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState<string | null>(null)
 
@@ -69,7 +70,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
           <h2 className="text-2xl font-bold mb-2">Herzlichen Glückwunsch!</h2>
           <p className="text-lg">Sie haben das Quiz erfolgreich abgeschlossen.</p>
         </div>
-        <p className="mb-4">{allCorrect ? "Nutzen Sie jetzt die Chance, an unserer exklusiven Verlosung teilzunehmen und spannende Gadgets zu gewinnen!" : "Leider haben Sie nicht alle Fragen richtig beantwortet. Keine Sorge, Rom wurde auch nicht an einem Tag erbaut! Versuchen Sie es erneut und werden Sie zum Conversational AI-Meister!"}</p>
+        <p className="mb-4 text-center">{allCorrect ? "🚀 Verpassen Sie nicht Ihre exklusive Chance! 🎁 Sichern Sie sich jetzt einen Platz in unserer Verlosung von spannenden Gadgets!" : "Leider haben Sie nicht alle Fragen richtig beantwortet. Keine Sorge, Rom wurde auch nicht an einem Tag erbaut! Versuchen Sie es erneut und werden Sie zum Conversational AI-Meister!"}</p>
         {allCorrect && !confirmationMessage && (
           <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-8">
             <form onSubmit={handleSubmit} className="grid gap-6">
@@ -114,6 +115,20 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
               </div>
               <div className="flex items-start space-x-2">
                 <Checkbox 
+                  id="contact" 
+                  checked={acceptedContact} 
+                  onCheckedChange={(checked) => setAcceptedContact(checked as boolean)}
+                  className="mt-1"
+                />
+                <label
+                  htmlFor="contact"
+                  className="text-sm text-gray-600"
+                >
+                  Ich bin damit einverstanden, dass Deloitte mich einmalig per E-Mail bezüglich dieser Registrierung kontaktieren darf. Dies umfasst das Ergebnis der Verlosung sowie ein Update zur Conversational AI Zusammenarbeit von Deloitte & Cognigy.
+                </label>
+              </div>
+              <div className="flex items-start space-x-2">
+                <Checkbox 
                   id="terms" 
                   checked={acceptedTerms} 
                   onCheckedChange={(checked) => setAcceptedTerms(checked as boolean)}
@@ -129,7 +144,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
               <Button 
                 type="submit" 
                 className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                disabled={isSubmitting || !!emailError || !acceptedTerms}
+                disabled={isSubmitting || !!emailError || !acceptedTerms || !acceptedContact} // Updated disabled condition
               >
                 {isSubmitting ? 'Wird verarbeitet...' : 'An der Verlosung teilnehmen'}
               </Button>
@@ -156,7 +171,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
                 <div className="ml-3">
                   <p className="text-sm text-blue-700">
                     Die Gewinner werden täglich am 20. und 21. November um 16:30 Uhr am Deloitte Stand ausgelost. 
-                    Wir werden alle Gewinner auch per E-Mail informieren. Viel Glück!
+                    Wir werden alle Gewinner auch per E-Mail informieren. Mögen die Algorithmen mit Ihnen sein!
                   </p>
                 </div>
               </div>
