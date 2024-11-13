@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { AlertCircle } from 'lucide-react'
-import Image from 'next/image'
 
 const questions = [
   {
@@ -164,22 +163,6 @@ export function Quiz({ onComplete }: QuizProps) {
           </Button>
         </CardFooter>
       </Card>
-      <div className="flex justify-center items-center space-x-8">
-        <Image
-          src="/deloitte-logo.png"
-          alt="Deloitte Logo"
-          width={150}
-          height={50}
-          className="object-contain"
-        />
-        <Image
-          src="/cognigy-logo.png"
-          alt="Cognigy Logo"
-          width={200}
-          height={50}
-          className="object-contain"
-        />
-      </div>
     </div>
   )
 }

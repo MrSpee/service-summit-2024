@@ -1,8 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { Quiz } from '@/components/Quiz'
 import { RegistrationForm } from '@/components/RegistrationForm'
+import Teaser from '@/components/Teaser'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function LandingPage() {
@@ -39,6 +41,23 @@ export default function LandingPage() {
             )}
           </CardContent>
         </Card>
+        <div className="flex justify-center items-center space-x-8 mt-8">
+          <Image
+            src="/deloitte-logo.png"
+            alt="Deloitte Logo"
+            width={180}
+            height={60}
+            className="object-contain"
+          />
+          <Image
+            src="/cognigy-logo.png"
+            alt="Cognigy Logo"
+            width={240}
+            height={60}
+            className="object-contain"
+          />
+        </div>
+        <Teaser />
       </main>
     </div>
   )
