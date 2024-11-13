@@ -60,12 +60,12 @@ const questions = [
   },
   {
     topic: "Agentic AI",
-    question: "Was kann die neue Generation der AI Workforce (Bots) namens Agentic AI von Cognigy NICHT?",
+    question: "Was kann die neue Generation der AI Bots namens Agentic AI von Cognigy NICHT?",
     options: [
       "Menschenähnliches Denkvermögen: Selbstständiges Analysieren von Anfragen und Vorschlagen der besten Vorgehensweise.",
       "Autonome Entscheidungsfindung: Dynamische Navigation und Nutzung von Tools zur erfolgreichen Erledigung von Aufgaben.",
       "Kollaborative KI: KI-Agenten können sich mit anderen KI-Agenten und Menschen beraten, um die effizientesten und genauesten Lösungen zu finden.",
-      "Erstellen deines hyperpersonalisierten Kaffees, z.B. dein koffeinfreier Kaffee mit Hafermilch"
+      "Servieren deines hyperpersonalisierten Kaffees, z.B. dein koffeinfreier Kaffee mit Hafermilch"
     ],
     correctAnswer: 3,
     tip: "Überlegen Sie, welche Fähigkeiten realistisch für eine KI-basierte Workforce sind und welche eher in den Bereich der Science-Fiction gehören."
