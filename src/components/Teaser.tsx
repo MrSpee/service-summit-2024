@@ -6,7 +6,7 @@ export default function Teaser() {
   return (
     <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg shadow-xl p-6 mt-8 mx-auto max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
       <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 leading-tight text-center">
-        Genervte Kunden? <br />Überarbeitete Mitarbeiter?
+        Schnell erklärt:
       </h2>
       <p className="text-sm sm:text-base mb-6 text-center">
         Wie Conversational AI Ihre Service-Probleme in Chancen verwandelt
