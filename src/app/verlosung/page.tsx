@@ -173,7 +173,7 @@ export default function RafflePage() {
             {isRevealing ? 'Karten werden aufgedeckt...' :
              isRaffleInProgress ? 'Verlosung läuft...' : 
              raffleComplete ? 'Verlosung abgeschlossen' : 
-             revealedCards.length === 0 ? 'Spielkarten aufdecken' : 'Verlosung starten'}
+             revealedCards.length === 0 ? 'Lose aufdecken' : 'Verlosung starten'}
           </Button>
           
           <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4">

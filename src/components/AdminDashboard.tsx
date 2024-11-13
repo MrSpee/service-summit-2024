@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
-import { getLeads, updateLeadAction, deleteLeadAction } from '@/app/actions'
+import { getLeads, updateLeadAction, deleteLeadAction, logout } from '@/app/actions'
 import { Lead } from '@/lib/kv-utils'
 import {
   Accordion,
@@ -14,11 +14,14 @@ import {
 } from "@/components/ui/accordion"
 import { format } from 'date-fns'
 import { de } from 'date-fns/locale'
+import { useRouter } from 'next/navigation'
 
 export default function AdminDashboard() {
   const [leads, setLeads] = useState<Lead[]>([])
+  const [selectedLeads, setSelectedLeads] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
     const fetchLeads = async () => {
@@ -64,10 +67,47 @@ export default function AdminDashboard() {
       try {
         await deleteLeadAction(lead.id)
         setLeads(leads.filter(l => l.id !== lead.id))
+        setSelectedLeads(selectedLeads.filter(id => id !== lead.id))
       } catch (err) {
         console.error('Fehler beim Löschen des Leads:', err)
         setError('Fehler beim Löschen des Leads. Bitte versuchen Sie es später erneut.')
       }
+    }
+  }
+
+  const handleSelectLead = (leadId: string) => {
+    setSelectedLeads(prev => 
+      prev.includes(leadId) 
+        ? prev.filter(id => id !== leadId)
+        : [...prev, leadId]
+    )
+  }
+
+  const handleDeleteSelectedLeads = async () => {
+    if (selectedLeads.length === 0) {
+      setError('Bitte wählen Sie mindestens einen Lead zum Löschen aus.')
+      return
+    }
+
+    if (confirm(`Sind Sie sicher, dass Sie ${selectedLeads.length} Lead(s) löschen möchten?`)) {
+      try {
+        await Promise.all(selectedLeads.map(id => deleteLeadAction(id)))
+        setLeads(leads.filter(lead => !selectedLeads.includes(lead.id)))
+        setSelectedLeads([])
+      } catch (err) {
+        console.error('Fehler beim Löschen der ausgewählten Leads:', err)
+        setError('Fehler beim Löschen der ausgewählten Leads. Bitte versuchen Sie es später erneut.')
+      }
+    }
+  }
+
+  const handleLogout = async () => {
+    try {
+      await logout()
+      router.push('/login')
+    } catch (err) {
+      console.error('Fehler beim Logout:', err)
+      setError('Fehler beim Logout. Bitte versuchen Sie es später erneut.')
     }
   }
 
@@ -104,10 +144,21 @@ export default function AdminDashboard() {
               <p className="text-xl font-semibold">Gewinner</p>
               <p className="text-3xl font-bold">{winners}</p>
             </div>
+            <Button onClick={handleLogout} variant="outline">Logout</Button>
           </div>
         </div>
       </div>
       <div className="container mx-auto p-4 pt-8">
+        <div className="mb-4 flex justify-between items-center">
+          <p className="text-lg font-semibold">{selectedLeads.length} Lead(s) ausgewählt</p>
+          <Button 
+            onClick={handleDeleteSelectedLeads} 
+            variant="destructive" 
+            disabled={selectedLeads.length === 0}
+          >
+            Ausgewählte Leads löschen
+          </Button>
+        </div>
         <Accordion type="single" collapsible className="w-full space-y-4">
           {leads.map((lead) => (
             <AccordionItem 
@@ -115,12 +166,21 @@ export default function AdminDashboard() {
               value={lead.id} 
               className={`border ${lead.isWinner ? 'border-4 border-yellow-400' : 'border-gray-300'} rounded-lg overflow-hidden shadow-md`}
             >
-              <AccordionTrigger className="flex justify-between items-center p-4 hover:bg-gray-50 transition-colors duration-200">
-                <span className="font-semibold">{lead.firstName} {lead.lastName}</span>
-                <span className="text-sm text-gray-500">
-                  {format(new Date(lead.registrationDate), 'dd.MM.yyyy HH:mm', { locale: de })}
-                </span>
-              </AccordionTrigger>
+              <div className="flex items-center p-4 hover:bg-gray-50 transition-colors duration-200">
+                <Checkbox
+                  checked={selectedLeads.includes(lead.id)}
+                  onCheckedChange={() => handleSelectLead(lead.id)}
+                  className="mr-4"
+                />
+                <AccordionTrigger className="flex-1 flex justify-between items-center">
+                  <div className="flex flex-col">
+                    <span className="font-semibold">{lead.firstName} {lead.lastName}</span>
+                    <span className="text-sm text-gray-500 mt-1">
+                      {format(new Date(lead.registrationDate), 'dd.MM.yyyy HH:mm', { locale: de })}
+                    </span>
+                  </div>
+                </AccordionTrigger>
+              </div>
               <AccordionContent className="p-4 bg-white">
                 <form onSubmit={(e) => handleUpdateLead(e, lead)} className="space-y-4">
                   <div>

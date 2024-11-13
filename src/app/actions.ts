@@ -1,7 +1,13 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import { addLead, updateLead, getAllLeads, deleteLead, Lead } from '@/lib/kv-utils'
+
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'default_admin_password'
+
+// Existing actions
 
 export async function submitRegistration(formData: FormData) {
   const firstName = formData.get('firstName') as string
@@ -57,4 +63,26 @@ export async function updateWinnerStatus(id: string, isWinner: boolean) {
   revalidatePath('/admin')
   revalidatePath('/verlosung')
   return { message: isWinner ? 'Gewinner erfolgreich markiert.' : 'Gewinnerstatus erfolgreich entfernt.' }
+}
+
+// New authentication actions
+
+export async function login(password: string) {
+  if (password === ADMIN_PASSWORD) {
+    const cookieStore = await cookies(); // Promise auflösen
+    cookieStore.set('auth_token', 'authenticated', { 
+      httpOnly: true, 
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 3600 // 1 Stunde
+    });
+    return { success: true };
+  }
+  return { success: false };
+}
+
+export async function logout() {
+  const cookieStore = await cookies(); // Promise auflösen
+  cookieStore.delete('auth_token');
+  redirect('/login');
 }
