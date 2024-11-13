@@ -80,7 +80,7 @@ END:VCALENDAR`
           {/* Header Section */}
           <div className="text-center space-y-4">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600 leading-tight">
-              Impulsvortrag: Conversational AI in 10 Minuten
+              Impulsvortrag: <br/>Conversational AI in 10 Minuten
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-gray-700">
             Genervte Kunden? <br/> Überarbeitete Mitarbeiter? <br/> Wann ziehen Sie die Reißleine? <br/>Wie Conversational AI Ihre Service-Probleme in Chancen verwandelt
