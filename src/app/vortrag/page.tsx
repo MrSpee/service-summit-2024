@@ -18,7 +18,7 @@ export default function VortragPage() {
 
   const sessions = [
     { 
-      date: '2024-11-20', 
+      date: '20.11.2024', 
       times: [
         { start: '13:45', end: '13:55' },
         { start: '16:00', end: '16:10' }
@@ -26,7 +26,7 @@ export default function VortragPage() {
       day: 'Mittwoch'
     },
     { 
-      date: '2024-11-21', 
+      date: '21.11.2024', 
       times: [
         { start: '09:45', end: '09:55' },
         { start: '13:45', end: '13:55' }
@@ -43,8 +43,9 @@ export default function VortragPage() {
   const generateCalendarLink = (type: 'google' | 'outlook' | 'ical') => {
     if (!selectedEvent) return ''
     const { date, start, end } = selectedEvent
-    const startDateTime = `${date}T${start}:00`
-    const endDateTime = `${date}T${end}:00`
+    const [day, month, year] = date.split('.')
+    const startDateTime = `${year}-${month}-${day}T${start}:00`
+    const endDateTime = `${year}-${month}-${day}T${end}:00`
     const event = {
       title: "Schnell erklärt: Conversational AI - Deloitte und Cognigy",
       description: "Wie Conversational AI Ihre Service-Probleme in Chancen verwandelt",
