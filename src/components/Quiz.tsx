@@ -13,63 +13,63 @@ import Image from 'next/image'
 const questions = [
   {
     topic: "Grundlagen",
-    question: "Wie hängen Conversational AI und Generative AI zusammen?",
+    question: "Was ist einer der größten Vorteile von Conversational AI im Kundenservice?",
     options: [
-      "Zusammen ermöglichen sie völlig neue Kundendialoge - als würde man mit einem superintelligenten Papagei chatten, der auch noch kreativ ist!",
-      "Sie haben so viel gemeinsam wie ein Toaster und ein Kühlschrank - beide sind elektrisch, das war's",
-      "GenAI macht nur Bilder von Welpen, während C.AI nur über das Wetter reden kann",
-      "Sie sind wie Öl und Wasser - wollen einfach nicht zusammenarbeiten"
+      "Mehr Kaffeepausen für das Team, weil die Kunden seltener anrufen.",
+      "Automatisierung von Routineanfragen, wodurch die Mitarbeiter Zeit für komplexere Anliegen haben.",
+      "Das System erzählt lustige Witze, um die Kunden zu unterhalten.",
+      "Der Server singt beim Starten die Unternehmenshymne."
     ],
-    correctAnswer: 0,
-    tip: "Denken Sie an moderne Plattformen wie Character.ai - wer hätte gedacht, dass KI so unterhaltsam sein kann?"
+    correctAnswer: 1,
+    tip: "Denken Sie darüber nach, wie Conversational AI die Effizienz im Kundenservice steigern kann."
   },
   {
     topic: "Technologie",
-    question: "Welche Technologie bildet die Grundlage für die meisten modernen Conversational AI-Systeme?",
+    question: "Welche Technologie ist ein wesentlicher Bestandteil von Conversational AI, um Kundenanfragen zu verstehen?",
     options: [
-      "Regelbasierte Systeme",
-      "Neuronale Netze und Deep Learning",
-      "Einfache if-then Statements",
-      "Quantencomputer"
+      "Augmented Reality, damit der Computer bunte Bilder malt.",
+      "Natürliche Sprachverarbeitung (NLP), um menschliche Sprache zu analysieren und zu interpretieren.",
+      "Virtuelle Realität, damit Kundenservice-Avatare in 3D erscheinen.",
+      "Eine Glaskugel, die die Absichten der Kunden vorhersieht."
     ],
     correctAnswer: 1,
-    tip: "Überlegen Sie, welche Technologie am besten mit großen Datenmengen und komplexen Mustern umgehen kann."
+    tip: "Überlegen Sie, welche Technologie es einem Computer ermöglicht, menschliche Sprache zu verstehen und darauf zu reagieren."
   },
   {
     topic: "Anwendungen",
-    question: "Welche dieser KI-Anwendungen klingt am unwahrscheinlichsten?",
+    question: "In welchem dieser Bereiche wird Conversational AI häufig eingesetzt?",
     options: [
-      "Ein KI-Therapeut, der Ihre Probleme mit Dad-Jokes löst",
-      "Ein virtueller Reiseberater, der Ihnen Urlaubsziele vorschlägt",
-      "Ein KI-Sprachlehrer, der 20 Sprachen gleichzeitig spricht",
-      "Ein KI-Barista, der Ihren Kaffee telepathisch zubereitet"
-    ],
-    correctAnswer: 3,
-    tip: "Auch wenn KI erstaunlich viel kann - Gedankenlesen und Kaffeekochen gehören (noch) nicht dazu!"
-  },
-  {
-    topic: "Herausforderungen",
-    question: "Welche Herausforderung stellt sich NICHT typischerweise bei der Entwicklung von Conversational AI?",
-    options: [
-      "Verständnis von Kontext und Nuancen",
-      "Umgang mit verschiedenen Sprachen und Dialekten",
-      "Sicherstellung der Datenschutzkonformität",
-      "Optimierung der Kaffeequalität"
-    ],
-    correctAnswer: 3,
-    tip: "Konzentrieren Sie sich auf die Aspekte, die direkt mit der Verarbeitung und dem Verständnis von Sprache zusammenhängen."
-  },
-  {
-    topic: "Integration",
-    question: "Welcher Aspekt ist am wichtigsten für eine erfolgreiche Integration von Conversational AI in Unternehmen?",
-    options: [
-      "Die AI muss Witze erzählen können",
-      "Nahtlose Integration in bestehende Systeme und Prozesse",
-      "Die AI muss eine menschliche Stimme imitieren können",
-      "Möglichst viele Emojis in den Antworten"
+      "Zur Vorhersage der nächsten Börsenkrise.",
+      "Im Kundenservice zur Automatisierung von Anfragen und Verbesserung des Kundenerlebnisses.",
+      "Beim Haareschneiden in virtuellen Friseursalons.",
+      "Als musikalische Begleitung bei Teambuilding-Workshops."
     ],
     correctAnswer: 1,
-    tip: "Überlegen Sie, was für Unternehmen am wertvollsten ist: Effizienz oder Unterhaltung?"
+    tip: "Denken Sie an den Bereich, in dem die Interaktion mit Kunden besonders wichtig ist."
+  },
+  {
+    topic: "Implementierung",
+    question: "Worauf sollte man bei der Implementierung eines Conversational AI-Projekts besonders achten?",
+    options: [
+      "Dass das System lustige Emojis senden kann.",
+      "Auf die Wahl des richtigen Snacks für das Kick-off-Meeting.",
+      "Auf die Wahl eines erfahrenen Partners, damit das Projekt effizient umgesetzt und das volle Potenzial von Conversational AI ausgeschöpft wird.",
+      "Dass das System hin und wieder eine Motivationsrede hält."
+    ],
+    correctAnswer: 2,
+    tip: "Überlegen Sie, was für den langfristigen Erfolg und die effektive Umsetzung eines Conversational AI-Projekts am wichtigsten ist."
+  },
+  {
+    topic: "Agentic AI",
+    question: "Was kann die neue Generation der AI Workforce (Bots) namens Agentic AI von Cognigy NICHT?",
+    options: [
+      "Menschenähnliches Denkvermögen: Selbstständiges Analysieren von Anfragen und Vorschlagen der besten Vorgehensweise.",
+      "Autonome Entscheidungsfindung: Dynamische Navigation und Nutzung von Tools zur erfolgreichen Erledigung von Aufgaben.",
+      "Kollaborative KI: KI-Agenten können sich mit anderen KI-Agenten und Menschen beraten, um die effizientesten und genauesten Lösungen zu finden.",
+      "Erstellen deines hyperpersonalisierten Kaffees, z.B. dein koffeinfreier Kaffee mit Hafermilch"
+    ],
+    correctAnswer: 3,
+    tip: "Überlegen Sie, welche Fähigkeiten realistisch für eine KI-basierte Workforce sind und welche eher in den Bereich der Science-Fiction gehören."
   }
 ]
 
@@ -125,7 +125,7 @@ export function Quiz({ onComplete }: QuizProps) {
       <Card className="shadow-lg mb-8">
         <CardHeader>
           <CardTitle className="text-xl font-bold">
-            Frage {currentQuestion + 1} ({questions[currentQuestion].topic})
+            Frage {currentQuestion + 1} - {questions[currentQuestion].topic}
           </CardTitle>
           <ProgressBar 
             value={(currentQuestion / questions.length) * 100} 
