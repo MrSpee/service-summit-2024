@@ -1,36 +1,58 @@
-import { Header } from "@/components/Header"
-import { Footer } from "@/components/Footer"
-
 export default function PrivacyPolicy() {
   return (
-    <>
-      <Header />
-      <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Datenschutzbestimmungen</h1>
-        <div className="prose max-w-none">
-          <h2>1. Erhebung und Verarbeitung personenbezogener Daten</h2>
-          <p>Wir erheben und verarbeiten personenbezogene Daten nur im Rahmen der gesetzlichen Bestimmungen. Bei der Teilnahme an unserem Quiz werden folgende Daten erhoben: Name, E-Mail-Adresse und Quiz-Ergebnisse.</p>
+    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      <div className="container mx-auto px-4 py-12">
+        <h1 className="text-4xl font-bold mb-8 text-center text-blue-800">Datenschutzhinweise</h1>
+        <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+          <div className="p-8 space-y-8">
+            <p className="text-gray-600 italic">Zuletzt aktualisiert: 13 September 2024</p>
+            
+            <section>
+              <h2 className="text-2xl font-semibold mb-4 text-blue-700">EINLEITUNG</h2>
+              <p className="text-gray-700">
+                In der nachfolgenden „Datenschutzerklärung" und in den „Informationen über die Verarbeitung von personenbezogenen Daten gemäß Art. 13, 14 DSGVO" wird erläutert, welche Daten wir über Sie erfassen, wofür wir diese Daten benötigen und an wen wir diese Daten weitergeben. Darüber hinaus beinhalten sie auch Ihre Rechte in Bezug auf Ihre Daten und die Ansprechpartner, an die Sie sich für weitere Informationen oder Anfragen wenden können.
+              </p>
+            </section>
 
-          <h2>2. Zweck der Datenverarbeitung</h2>
-          <p>Die erhobenen Daten werden ausschließlich zur Durchführung des Quiz und der damit verbundenen Verlosung verwendet. Im Falle eines Gewinns werden die Daten zur Kontaktaufnahme und Gewinnübermittlung genutzt.</p>
+            <section>
+              <h2 className="text-2xl font-semibold mb-4 text-blue-700">I. DATENSCHUTZERKLÄRUNG</h2>
+              <h3 className="text-xl font-semibold mb-2 text-blue-600">Für wen gilt diese Datenschutzerklärung und was wird durch sie abgedeckt?</h3>
+              <p className="text-gray-700">
+                Diese Datenschutzerklärung gilt ausschließlich für die spezifische Website der deloitte.com/de, wofür sich die Deloitte GmbH Wirtschaftsprüfungsgesellschaft mit Sitz in München und die in unserem Eigentum stehenden oder von uns beherrschten Unternehmen („Deloitte", „wir", „uns" oder „unser") verantwortlich zeichnen, sowie für solche Applikationen („Deloitte-Apps") und weitere Websites, welche von Deloitte angeboten werden.
+              </p>
+            </section>
 
-          <h2>3. Speicherdauer</h2>
-          <p>Die Daten werden nur so lange gespeichert, wie es für die Durchführung des Quiz und der Verlosung erforderlich ist. Nach Abschluss der Verlosung werden die Daten gelöscht, es sei denn, es bestehen gesetzliche Aufbewahrungspflichten.</p>
+            <section>
+              <h2 className="text-2xl font-semibold mb-4 text-blue-700">Welche Daten werden von uns erhoben?</h2>
+              <p className="text-gray-700 mb-2">
+                Wir erheben verschiedene Arten von personenbezogenen Daten, einschließlich, aber nicht beschränkt auf:
+              </p>
+              <ul className="list-disc pl-6 text-gray-700">
+                <li>Kontaktinformationen (z.B. Name, E-Mail-Adresse, Telefonnummer)</li>
+                <li>Berufliche Informationen (z.B. Jobtitel, Unternehmen)</li>
+                <li>Technische Daten (z.B. IP-Adresse, Browsertyp)</li>
+                <li>Nutzungsdaten unserer Website und Dienste</li>
+              </ul>
+            </section>
 
-          <h2>4. Weitergabe von Daten</h2>
-          <p>Eine Weitergabe Ihrer Daten an Dritte erfolgt nicht, es sei denn, wir sind gesetzlich dazu verpflichtet.</p>
+            {/* Add more sections here, following the same structure */}
 
-          <h2>5. Ihre Rechte</h2>
-          <p>Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung oder Einschränkung der Verarbeitung Ihrer personenbezogenen Daten. Zudem haben Sie ein Widerspruchsrecht gegen die Verarbeitung und ein Recht auf Datenübertragbarkeit.</p>
-
-          <h2>6. Kontakt</h2>
-          <p>Bei Fragen zur Erhebung, Verarbeitung oder Nutzung Ihrer personenbezogenen Daten können Sie sich jederzeit an uns wenden.</p>
-
-          <h2>7. Änderungen der Datenschutzbestimmungen</h2>
-          <p>Wir behalten uns vor, diese Datenschutzbestimmungen jederzeit unter Beachtung der geltenden Datenschutzvorschriften zu ändern.</p>
+            <section>
+              <h2 className="text-2xl font-semibold mb-4 text-blue-700">Kontakt</h2>
+              <p className="text-gray-700 mb-2">
+                Bei Fragen zum Datenschutz oder zur Ausübung Ihrer Rechte kontaktieren Sie uns bitte unter:
+              </p>
+              <address className="text-gray-700 not-italic">
+                Deloitte GmbH Wirtschaftsprüfungsgesellschaft<br />
+                Datenschutzbeauftragter<br />
+                Rosenheimer Platz 4<br />
+                81669 München<br />
+                E-Mail: privacy@deloitte.de
+              </address>
+            </section>
+          </div>
         </div>
-      </main>
-      <Footer />
-    </>
+      </div>
+    </main>
   )
 }

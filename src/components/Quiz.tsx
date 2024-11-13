@@ -8,19 +8,20 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { AlertCircle } from 'lucide-react'
+import Image from 'next/image'
 
 const questions = [
   {
     topic: "Grundlagen",
-    question: "Was ist der Hauptunterschied zwischen einem Chatbot und einem Conversational AI-System?",
+    question: "Wie hängen Conversational AI und Generative AI zusammen?",
     options: [
-      "Chatbots können nur vorprogrammierte Antworten geben, während Conversational AI lernen und sich anpassen kann.",
-      "Conversational AI ist immer offline, Chatbots sind immer online.",
-      "Chatbots verstehen komplexe Kontexte besser als Conversational AI.",
-      "Es gibt keinen Unterschied, die Begriffe sind austauschbar."
+      "Zusammen ermöglichen sie völlig neue Kundendialoge - als würde man mit einem superintelligenten Papagei chatten, der auch noch kreativ ist!",
+      "Sie haben so viel gemeinsam wie ein Toaster und ein Kühlschrank - beide sind elektrisch, das war's",
+      "GenAI macht nur Bilder von Welpen, während C.AI nur über das Wetter reden kann",
+      "Sie sind wie Öl und Wasser - wollen einfach nicht zusammenarbeiten"
     ],
     correctAnswer: 0,
-    tip: "Denken Sie darüber nach, welches System flexibler auf unerwartete Eingaben reagieren kann."
+    tip: "Denken Sie an moderne Plattformen wie Character.ai - wer hätte gedacht, dass KI so unterhaltsam sein kann?"
   },
   {
     topic: "Technologie",
@@ -36,15 +37,15 @@ const questions = [
   },
   {
     topic: "Anwendungen",
-    question: "Was ist NICHT typischerweise eine Anwendung von Conversational AI?",
+    question: "Welche dieser KI-Anwendungen klingt am unwahrscheinlichsten?",
     options: [
-      "Kundenservice-Chatbots",
-      "Virtuelle persönliche Assistenten",
-      "Automatische Übersetzungsdienste",
-      "Kaffeemaschinen programmieren"
+      "Ein KI-Therapeut, der Ihre Probleme mit Dad-Jokes löst",
+      "Ein virtueller Reiseberater, der Ihnen Urlaubsziele vorschlägt",
+      "Ein KI-Sprachlehrer, der 20 Sprachen gleichzeitig spricht",
+      "Ein KI-Barista, der Ihren Kaffee telepathisch zubereitet"
     ],
     correctAnswer: 3,
-    tip: "Denken Sie darüber nach, welche Option am wenigsten mit Sprache und Kommunikation zu tun hat."
+    tip: "Auch wenn KI erstaunlich viel kann - Gedankenlesen und Kaffeekochen gehören (noch) nicht dazu!"
   },
   {
     topic: "Herausforderungen",
@@ -120,47 +121,65 @@ export function Quiz({ onComplete }: QuizProps) {
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-lg">
-      <CardHeader>
-        <CardTitle className="text-xl font-bold">
-          Frage {currentQuestion + 1} ({questions[currentQuestion].topic})
-        </CardTitle>
-        <ProgressBar 
-          value={(currentQuestion / questions.length) * 100} 
-          className="w-full" 
+    <div className="w-full max-w-md mx-auto">
+      <Card className="shadow-lg mb-8">
+        <CardHeader>
+          <CardTitle className="text-xl font-bold">
+            Frage {currentQuestion + 1} ({questions[currentQuestion].topic})
+          </CardTitle>
+          <ProgressBar 
+            value={(currentQuestion / questions.length) * 100} 
+            className="w-full" 
+          />
+        </CardHeader>
+        <CardContent>
+          <p className="mb-4 text-lg font-semibold">{questions[currentQuestion].question}</p>
+          <RadioGroup value={selectedAnswers[currentQuestion].toString()} onValueChange={(value) => handleAnswerSelection(parseInt(value))} className="space-y-2">
+            {questions[currentQuestion].options.map((option, index) => (
+              <div key={index} className="flex items-center space-x-2 p-2 rounded-md hover:bg-accent">
+                <RadioGroupItem value={index.toString()} id={`option-${index}`} />
+                <Label htmlFor={`option-${index}`} className="flex-grow cursor-pointer">{option}</Label>
+              </div>
+            ))}
+          </RadioGroup>
+          {showTip && (
+            <div className="mt-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 rounded-md" role="alert">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <AlertCircle className="h-5 w-5 text-yellow-500" />
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm text-yellow-700">{questions[currentQuestion].tip}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </CardContent>
+        <CardFooter>
+          <Button 
+            onClick={handleNextQuestion} 
+            className="w-full bg-blue-100 hover:bg-blue-200 text-blue-800"
+          >
+            {currentQuestion < questions.length - 1 ? buttonText : "Quiz beenden!"}
+          </Button>
+        </CardFooter>
+      </Card>
+      <div className="flex justify-center items-center space-x-8">
+        <Image
+          src="/deloitte-logo.png"
+          alt="Deloitte Logo"
+          width={150}
+          height={50}
+          className="object-contain"
         />
-      </CardHeader>
-      <CardContent>
-        <p className="mb-4 text-lg font-semibold">{questions[currentQuestion].question}</p>
-        <RadioGroup value={selectedAnswers[currentQuestion].toString()} onValueChange={(value) => handleAnswerSelection(parseInt(value))} className="space-y-2">
-          {questions[currentQuestion].options.map((option, index) => (
-            <div key={index} className="flex items-center space-x-2 p-2 rounded-md hover:bg-accent">
-              <RadioGroupItem value={index.toString()} id={`option-${index}`} />
-              <Label htmlFor={`option-${index}`} className="flex-grow cursor-pointer">{option}</Label>
-            </div>
-          ))}
-        </RadioGroup>
-        {showTip && (
-          <div className="mt-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 rounded-md" role="alert">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <AlertCircle className="h-5 w-5 text-yellow-500" />
-              </div>
-              <div className="ml-3">
-                <p className="text-sm text-yellow-700">{questions[currentQuestion].tip}</p>
-              </div>
-            </div>
-          </div>
-        )}
-      </CardContent>
-      <CardFooter>
-        <Button 
-          onClick={handleNextQuestion} 
-          className="w-full bg-blue-100 hover:bg-blue-200 text-blue-800"
-        >
-          {currentQuestion < questions.length - 1 ? buttonText : "Quiz beenden!"}
-        </Button>
-      </CardFooter>
-    </Card>
+        <Image
+          src="/cognigy-logo.png"
+          alt="Cognigy Logo"
+          width={200}
+          height={50}
+          className="object-contain"
+        />
+      </div>
+    </div>
   )
 }

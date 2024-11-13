@@ -19,8 +19,16 @@ export default function LandingPage() {
       <main className="container mx-auto px-4 py-8">
         <Card className="max-w-3xl mx-auto">
           <CardHeader>
-            <CardTitle className="text-xl text-center">
-              Deloitte & Cognigy präsentieren<br />das ultimative Conversational AI Quiz<br />mit tollen Preisen.<br />Teste dein Wissen!
+            <CardTitle className="text-3xl font-bold text-center text-blue-600">
+              Deloitte & Cognigy präsentieren
+              <br />
+              das Conversational AI Quiz
+              <br />
+              <span className="text-2xl font-semibold text-gray-700">
+                Testen Sie Ihr Wissen und
+                <br />
+                gewinnen Sie tolle Preise!
+              </span>
             </CardTitle>
           </CardHeader>
           <CardContent>
