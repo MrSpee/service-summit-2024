@@ -82,6 +82,9 @@ export function Quiz({ onComplete }: QuizProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>(new Array(questions.length).fill(-1))
   const [showTip, setShowTip] = useState(false)
+  const [isAnswered, setIsAnswered] = useState(false)
+
+  const progressPercentage = Math.max(0, ((currentQuestion) / questions.length) * 100)
 
   const buttonText = useMemo(() => {
     const phrases = [
@@ -104,12 +107,14 @@ export function Quiz({ onComplete }: QuizProps) {
     newSelectedAnswers[currentQuestion] = answerIndex
     setSelectedAnswers(newSelectedAnswers)
     setShowTip(false)
+    setIsAnswered(true)
   }
 
   const handleNextQuestion = () => {
     if (selectedAnswers[currentQuestion] === questions[currentQuestion].correctAnswer) {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(prevQuestion => prevQuestion + 1)
+        setIsAnswered(false)
       } else {
         const score = selectedAnswers.filter((answer, index) => answer === questions[index].correctAnswer).length
         onComplete(score)
@@ -126,14 +131,27 @@ export function Quiz({ onComplete }: QuizProps) {
           <CardTitle className="text-xl font-bold">
             Frage {currentQuestion + 1} - {questions[currentQuestion].topic}
           </CardTitle>
-          <ProgressBar 
-            value={(currentQuestion / questions.length) * 100} 
-            className="w-full" 
-          />
+          <div className="relative pt-1">
+            <div className="flex mb-2 items-center justify-center">
+              <div className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200">
+                {Math.round(progressPercentage)}% geschafft
+              </div>
+            </div>
+            <ProgressBar 
+              value={progressPercentage}
+              className="w-full" 
+              aria-label={`Fortschritt: ${currentQuestion} von ${questions.length} Fragen beantwortet`}
+            />
+          </div>
         </CardHeader>
         <CardContent>
           <p className="mb-4 text-lg font-semibold">{questions[currentQuestion].question}</p>
-          <RadioGroup value={selectedAnswers[currentQuestion].toString()} onValueChange={(value) => handleAnswerSelection(parseInt(value))} className="space-y-2">
+          <RadioGroup 
+            value={selectedAnswers[currentQuestion].toString()} 
+            onValueChange={(value) => handleAnswerSelection(parseInt(value))} 
+            className="space-y-2"
+            aria-label="Antwortoptionen"
+          >
             {questions[currentQuestion].options.map((option, index) => (
               <div key={index} className="flex items-center space-x-2 p-2 rounded-md hover:bg-accent">
                 <RadioGroupItem value={index.toString()} id={`option-${index}`} />
@@ -145,7 +163,7 @@ export function Quiz({ onComplete }: QuizProps) {
             <div className="mt-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 rounded-md" role="alert">
               <div className="flex">
                 <div className="flex-shrink-0">
-                  <AlertCircle className="h-5 w-5 text-yellow-500" />
+                  <AlertCircle className="h-5 w-5 text-yellow-500" aria-hidden="true" />
                 </div>
                 <div className="ml-3">
                   <p className="text-sm text-yellow-700">{questions[currentQuestion].tip}</p>
@@ -158,6 +176,8 @@ export function Quiz({ onComplete }: QuizProps) {
           <Button 
             onClick={handleNextQuestion} 
             className="w-full bg-blue-100 hover:bg-blue-200 text-blue-800"
+            disabled={!isAnswered}
+            aria-label={currentQuestion < questions.length - 1 ? "Zur nächsten Frage" : "Quiz beenden"}
           >
             {currentQuestion < questions.length - 1 ? buttonText : "Quiz beenden!"}
           </Button>

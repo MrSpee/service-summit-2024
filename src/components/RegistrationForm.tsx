@@ -170,7 +170,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
                 </div>
                 <div className="ml-3">
                   <p className="text-sm text-blue-700">
-                    Die Gewinner werden täglich am 20. und 21. November um 16:30 Uhr am Deloitte Stand ausgelost. 
+                    Die Gewinner werden täglich um 15:45 Uhr am Deloitte Stand ausgelost. 
                     Wir werden alle Gewinner auch per E-Mail informieren. Wir drücken die Daumen!
                   </p>
                 </div>
