@@ -59,7 +59,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
     setConfirmationMessage(result.message)
 
     // Redirect to vortrag page after successful registration
-    if (result.success) {
+    if (result.message.includes('erfolgreich')) {
       setTimeout(() => {
         router.push('/vortrag')
       }, 3000) // Redirect after 3 seconds to allow user to read the confirmation message
