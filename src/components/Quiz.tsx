@@ -14,48 +14,48 @@ const questions = [
     topic: "Grundlagen",
     question: "Was ist einer der größten Vorteile von Conversational AI im Kundenservice?",
     options: [
-      "Mehr Kaffeepausen für das Team, weil die Kunden seltener anrufen.",
-      "Automatisierung von Routineanfragen, wodurch die Mitarbeiter Zeit für komplexere Anliegen haben.",
-      "Das System erzählt lustige Witze, um die Kunden zu unterhalten.",
-      "Der Server singt beim Starten die Unternehmenshymne."
+      "Verringerung der Anrufhäufigkeit, wodurch Teams entlastet werden.",
+      "Automatisierung von Standardanfragen, wodurch Mitarbeiter mehr Zeit für wertschöpfende und komplexe Kundeninteraktionen haben.",
+      "Erhöhung der Kundenbindung durch interaktive und spielerische Unterhaltung.",
+      "Automatisches Einschalten des \"Bitte warten\"-Modus mit stilvoller Musik."
     ],
     correctAnswer: 1,
     tip: "Denken Sie darüber nach, wie Conversational AI die Effizienz im Kundenservice steigern kann."
   },
   {
     topic: "Technologie",
-    question: "Welche Technologie ist ein wesentlicher Bestandteil von Conversational AI, um Kundenanfragen zu verstehen?",
+    question: "Welche der folgenden Technologien wird am häufigsten genutzt, um die Sprachverarbeitung in Conversational AI zu ermöglichen?",
     options: [
-      "Augmented Reality, damit der Computer bunte Bilder malt.",
-      "Natürliche Sprachverarbeitung (NLP), um menschliche Sprache zu analysieren und zu interpretieren.",
-      "Virtuelle Realität, damit Kundenservice-Avatare in 3D erscheinen.",
-      "Eine Glaskugel, die die Absichten der Kunden vorhersieht."
+      "Machine Learning-basierte Bildanalyse",
+      "Natural Language Processing (NLP) zur Analyse und Interpretation menschlicher Sprache",
+      "Erweiterte Echtzeit-Datenvisualisierung",
+      "Blockchain zur Verifizierung von Sprachmustern"
     ],
     correctAnswer: 1,
     tip: "Überlegen Sie, welche Technologie es einem Computer ermöglicht, menschliche Sprache zu verstehen und darauf zu reagieren."
   },
   {
     topic: "Anwendungen",
-    question: "In welchem dieser Bereiche wird Conversational AI häufig eingesetzt?",
+    question: "In welchem dieser Bereiche kann Conversational AI die Kundenerfahrung besonders verbessern?",
     options: [
-      "Zur Vorhersage der nächsten Börsenkrise.",
-      "Im Kundenservice zur Automatisierung von Anfragen und Verbesserung des Kundenerlebnisses.",
-      "Beim Haareschneiden in virtuellen Friseursalons.",
-      "Als musikalische Begleitung bei Teambuilding-Workshops."
+      "Automatisierte Wettervorhersagen für spezielle Zielgruppen",
+      "Effizientes Kundenservice-Management für Versicherungen, mit optimierten Antwortzeiten und erhöhter Kundenzufriedenheit",
+      "Unterstützung bei der Erstellung von Finanzberichten für multinationale Konzerne",
+      "Analyse und Steuerung von logistischen Prozessen im Supply Chain Management"
     ],
     correctAnswer: 1,
     tip: "Denken Sie an den Bereich, in dem die Interaktion mit Kunden besonders wichtig ist."
   },
   {
     topic: "Implementierung",
-    question: "Worauf sollte man bei der Implementierung eines Conversational AI-Projekts besonders achten?",
+    question: "Welcher Aspekt ist entscheidend, um einen Implementierungspartner für Conversational AI erfolgreich auszuwählen?",
     options: [
-      "Dass das System lustige Emojis senden kann.",
-      "Auf die Wahl des richtigen Snacks für das Kick-off-Meeting.",
-      "Auf die Wahl eines erfahrenen Partners, damit das Projekt effizient umgesetzt und das volle Potenzial von Conversational AI ausgeschöpft wird.",
-      "Dass das System hin und wieder eine Motivationsrede hält."
+      "Die Reputation des Partners in der Branche",
+      "Die Fähigkeit des Partners, umfassende End-to-End-Lösungen zu bieten – von der strategischen Beratung bis hin zur erfolgreichen Umsetzung",
+      "Die Anzahl der Zertifikate des Partners in verwandten Technologien",
+      "Die Verfügbarkeit des Partners für kurzfristige technische Schulungen"
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     tip: "Überlegen Sie, was für den langfristigen Erfolg und die effektive Umsetzung eines Conversational AI-Projekts am wichtigsten ist."
   },
   {
