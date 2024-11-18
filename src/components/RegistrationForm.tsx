@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
@@ -20,9 +21,10 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [confirmationMessage, setConfirmationMessage] = useState<string | null>(null)
   const [acceptedTerms, setAcceptedTerms] = useState(false)
-  const [acceptedContact, setAcceptedContact] = useState(false) // Added state for contact consent
+  const [acceptedContact, setAcceptedContact] = useState(false)
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState<string | null>(null)
+  const router = useRouter()
 
   const validateEmail = (email: string) => {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
@@ -55,6 +57,13 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
 
     setIsSubmitting(false)
     setConfirmationMessage(result.message)
+
+    // Redirect to vortrag page after successful registration
+    if (result.success) {
+      setTimeout(() => {
+        router.push('/vortrag')
+      }, 3000) // Redirect after 3 seconds to allow user to read the confirmation message
+    }
   }
 
   const allCorrect = score === totalQuestions
@@ -144,7 +153,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
               <Button 
                 type="submit" 
                 className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                disabled={isSubmitting || !!emailError || !acceptedTerms || !acceptedContact} // Updated disabled condition
+                disabled={isSubmitting || !!emailError || !acceptedTerms || !acceptedContact}
               >
                 {isSubmitting ? 'Wird verarbeitet...' : 'An der Verlosung teilnehmen'}
               </Button>
@@ -172,6 +181,18 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
                   <p className="text-sm text-blue-700">
                     Die Gewinner werden täglich am 20. und 21. November um 16:30 Uhr am Deloitte Stand ausgelost. 
                     Wir werden alle Gewinner auch per E-Mail informieren. Wir drücken die Daumen!
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 rounded-md" role="alert">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <Info className="h-5 w-5 text-yellow-500" />
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm text-yellow-700">
+                    Sie werden in Kürze zur Vortragsseite weitergeleitet. Falls die Weiterleitung nicht funktioniert, klicken Sie bitte <Link href="/vortrag" className="text-blue-600 hover:underline font-semibold">hier</Link>.
                   </p>
                 </div>
               </div>
