@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
@@ -24,7 +23,6 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
   const [acceptedContact, setAcceptedContact] = useState(false)
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState<string | null>(null)
-  const router = useRouter()
 
   const validateEmail = (email: string) => {
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
@@ -57,13 +55,6 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
 
     setIsSubmitting(false)
     setConfirmationMessage(result.message)
-
-    // Redirect to vortrag page after successful registration
-    if (result.message.includes('erfolgreich')) {
-      setTimeout(() => {
-        router.push('/vortrag')
-      }, 3000) // Redirect after 3 seconds to allow user to read the confirmation message
-    }
   }
 
   const allCorrect = score === totalQuestions
@@ -192,7 +183,10 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ score, total
                 </div>
                 <div className="ml-3">
                   <p className="text-sm text-yellow-700">
-                    Sie werden in Kürze zur Vortragsseite weitergeleitet. Falls die Weiterleitung nicht funktioniert, klicken Sie bitte <Link href="/vortrag" className="text-blue-600 hover:underline font-semibold">hier</Link>.
+                    Erfahren Sie mehr über unseren Vortrag: Conversational AI in 10 Minuten - und sichern Sie sich Ihren Platz!{' '}
+                    <Link href="/vortrag" className="text-blue-600 hover:underline font-semibold">
+                      Klicken Sie hier für Details und Termine
+                    </Link>
                   </p>
                 </div>
               </div>

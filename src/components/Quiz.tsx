@@ -20,7 +20,7 @@ const questions = [
       "Automatisches Einschalten des \"Bitte warten\"-Modus mit stilvoller Musik."
     ],
     correctAnswer: 1,
-    tip: "Denken Sie darüber nach, wie Conversational AI die Effizienz im Kundenservice steigern kann."
+    tip: "Denken Sie daran: KI ist wie ein fleißiger Praktikant, der nie Kaffee trinkt, nie müde wird und immer lächelt... auch montags um 8 Uhr!"
   },
   {
     topic: "Technologie",
@@ -32,31 +32,31 @@ const questions = [
       "Blockchain zur Verifizierung von Sprachmustern"
     ],
     correctAnswer: 1,
-    tip: "Überlegen Sie, welche Technologie es einem Computer ermöglicht, menschliche Sprache zu verstehen und darauf zu reagieren."
+    tip: "Stellen Sie sich vor, Sie hätten einen Supercomputer, der Ihre Witze versteht... und trotzdem darüber lacht!"
   },
   {
     topic: "Anwendungen",
     question: "In welchem dieser Bereiche kann Conversational AI die Kundenerfahrung besonders verbessern?",
     options: [
       "Automatisierte Wettervorhersagen für spezielle Zielgruppen",
-      "Effizientes Kundenservice-Management für Versicherungen, mit optimierten Antwortzeiten und erhöhter Kundenzufriedenheit",
+      "Effizientes Kundenservice-Management mit optimierten Antwortzeiten und erhöhter Kundenzufriedenheit",
       "Unterstützung bei der Erstellung von Finanzberichten für multinationale Konzerne",
       "Analyse und Steuerung von logistischen Prozessen im Supply Chain Management"
     ],
     correctAnswer: 1,
-    tip: "Denken Sie an den Bereich, in dem die Interaktion mit Kunden besonders wichtig ist."
+    tip: "Denken Sie an den Bereich, wo Menschen am verzweifeltsten nach Hilfe suchen... nein, nicht beim Zusammenbauen von IKEA-Möbeln!"
   },
   {
     topic: "Implementierung",
     question: "Welcher Aspekt ist entscheidend, um einen Implementierungspartner für Conversational AI erfolgreich auszuwählen?",
     options: [
       "Die Reputation des Partners in der Branche",
-      "Die Fähigkeit des Partners, umfassende End-to-End-Lösungen zu bieten – von der strategischen Beratung bis hin zur erfolgreichen Umsetzung",
       "Die Anzahl der Zertifikate des Partners in verwandten Technologien",
-      "Die Verfügbarkeit des Partners für kurzfristige technische Schulungen"
+      "Die Verfügbarkeit des Partners für kurzfristige technische Schulungen",
+      "Die Fähigkeit des Partners, umfassende End-to-End-Lösungen zu bieten – von der strategischen Beratung bis hin zur erfolgreichen Umsetzung"
     ],
-    correctAnswer: 1,
-    tip: "Überlegen Sie, was für den langfristigen Erfolg und die effektive Umsetzung eines Conversational AI-Projekts am wichtigsten ist."
+    correctAnswer: 3,
+    tip: "Suchen Sie jemanden, der Ihr Projekt von A bis Z begleitet... nicht nur jemanden, der Ihnen beibringt, wie man 'Hallo Welt!' auf KI-isch sagt!"
   },
   {
     topic: "Agentic AI",
@@ -68,7 +68,7 @@ const questions = [
       "Servieren deines hyperpersonalisierten Kaffees, z.B. dein koffeinfreier Kaffee mit Hafermilch"
     ],
     correctAnswer: 3,
-    tip: "Überlegen Sie, welche Fähigkeiten realistisch für eine KI-basierte Workforce sind und welche eher in den Bereich der Science-Fiction gehören."
+    tip: "KI kann vieles, aber manche Dinge bleiben menschlich. Zum Beispiel der Kaffee, der schmeckt, als hätte ihn ein Praktikant an seinem ersten Tag gemacht!"
   }
 ]
 
