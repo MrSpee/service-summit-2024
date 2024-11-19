@@ -1,27 +1,37 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { getLeads, updateLeadAction } from '@/app/actions'
 import { Lead } from '@/lib/kv-utils'
 import confetti from 'canvas-confetti'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Volume2, VolumeX, Music, Music2 } from 'lucide-react'
 
 // Adjustable timing constants (in milliseconds)
-const CARD_REVEAL_DURATION = 10000; // Total duration for revealing all cards
+const CARD_REVEAL_DURATION = 2000; // Total duration for revealing all cards
+const SHUFFLE_DURATION = 5000; // Duration for shuffle animation
 const WINNER_REVEAL_INTERVAL = 2000; // Time between revealing each winner
+const INITIAL_WAIT_PERIOD = 5000; // 5 seconds wait before first winner is drawn
+
+// Music file paths
+const CARD_REVEAL_MUSIC = '/card-reveal-music.mp3';
+const RAFFLE_MUSIC = '/raffle-music.mp3';
 
 const emojis = ['😎', '🦸', '🚀', '💡', '🔥', '⚡', '🌟', '🦾', '🧠', '🔮', '🤖', '💬', '🗨️', '📱', '💻', '🎙️', '🔊', '👾', '🤯', '🌈', '🎭', '🎮', '🕹️', '📡', '🛰️', '🔬', '🔭', '💎', '🔋', '🔌']
 
-const superheroNames = [
-  'Captain Chatbot', 'Wonder AI', 'Iron Logic', 'The Incredible Code', 'Spider-Network',
-  'Black Bandwidth', 'Thor Thunderscript', 'Doctor Strange Query', 'Ant-Algorithm',
-  'Scarlet Syntax', 'Vision Voice', 'Hulk Heuristic', 'Falcon Function', 'Winter Webhook',
-  'Star-Lord String', 'Gamora GPU', 'Drax Data', 'Rocket RAM', 'Groot Graph',
-  'Wasp Widget', 'Hawkeye Hash', 'Black Panther Processor', 'Captain Compiler',
-  'Bucky Buffer', 'Loki Loop', 'Nebula Neural Net', 'Mantis Machine Learning',
-  'Valkyrie Variable', 'Okoye Object', 'Shuri Shader'
+const kundendienstHelden = [
+  'Superschnelle', 'Lösungs', 'Freundliche', 'Gedulds',
+  'Hilfs', 'Erklärungs', 'Problemlöser', 'Zuhör',
+  'Beratungs', 'Empathie', 'Telefon', 'Chat-Champion',
+  'E-Mail-Experte', 'Kundenversteher', 'Servicewunder',
+  'Beschwerdeflüsterer', 'Antwort-Ass', 'Feedback-Fee',
+  'Qualitäts', 'Warteschlangen-Wunder', 'Ticket-Titan',
+  'Support-Superstar', 'Prozess-Profi', 'Multitasking-Meister',
+  'Eskalations-Experte', 'Kundenglück-Künstler', 'Lächel-Legende',
+  'Wissensdatenbank-Wächter', 'Kundenzufriedenheits-Zauberer',
+  'Servicekompetenz-König'
 ]
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -34,8 +44,17 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 const ParticipantCard: React.FC<{ participant: Lead, isRevealed: boolean, index: number }> = ({ participant, isRevealed, index }) => {
+  const heroTerm = kundendienstHelden[index % kundendienstHelden.length]
   return (
-    <div className="card-container">
+    <motion.div 
+      className="card-container" 
+      layout
+      transition={{
+        type: "spring",
+        damping: 25,
+        stiffness: 120
+      }}
+    >
       <motion.div
         className="card-inner"
         initial={false}
@@ -52,12 +71,41 @@ const ParticipantCard: React.FC<{ participant: Lead, isRevealed: boolean, index:
         <Card className="card-face card-front">
           <CardContent className="flex flex-col items-center justify-center h-full">
             <p className="text-3xl mb-2">{emojis[index % emojis.length]}</p>
-            <p className="font-bold text-lg mb-1">{participant.firstName}</p>
-            <p className="text-xs text-gray-600">{superheroNames[index % superheroNames.length]}</p>
+            <p className="text-xs text-gray-600 mb-1">{heroTerm}</p>
+            <p className="font-bold text-lg">{participant.firstName}</p>
           </CardContent>
         </Card>
       </motion.div>
-    </div>
+    </motion.div>
+  )
+}
+
+const AnimatedButton: React.FC<{ 
+  onClick: () => void, 
+  disabled: boolean, 
+  isWaiting: boolean, 
+  children: React.ReactNode 
+}> = ({ onClick, disabled, isWaiting, children }) => {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`
+        relative overflow-hidden text-2xl py-6 px-12 text-white font-bold rounded-full 
+        transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed
+        shadow-lg hover:shadow-xl
+        ${isWaiting ? 'animate-pulse' : 'bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800'}
+      `}
+      style={{
+        backgroundImage: isWaiting 
+          ? 'linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)' 
+          : undefined,
+        backgroundSize: '400% 400%',
+        animation: isWaiting ? 'gradient 15s ease infinite, pulse 2s infinite' : undefined
+      }}
+    >
+      {children}
+    </button>
   )
 }
 
@@ -69,12 +117,18 @@ export default function RafflePage() {
   const [participantCount, setParticipantCount] = useState(0)
   const [revealedCards, setRevealedCards] = useState<string[]>([])
   const [isRevealing, setIsRevealing] = useState(false)
+  const [isShuffling, setIsShuffling] = useState(false)
+  const [isMuted, setIsMuted] = useState(false)
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false)
+  const [isWaiting, setIsWaiting] = useState(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const shuffleIntervalRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     const fetchParticipants = async () => {
       const leads = await getLeads()
       const validLeads = leads.filter(lead => lead.inDraw && lead.firstName)
-      setParticipants(validLeads)
+      setParticipants(shuffleArray(validLeads))
       setParticipantCount(validLeads.length)
     }
     fetchParticipants()
@@ -86,29 +140,88 @@ export default function RafflePage() {
     return chance.toFixed(2) + '%'
   }, [])
 
+  const playMusic = useCallback((musicFile: string) => {
+    if (audioRef.current) {
+      if (audioRef.current.src !== musicFile) {
+        audioRef.current.src = musicFile
+      }
+      audioRef.current.currentTime = 0
+      audioRef.current.loop = true
+      audioRef.current.muted = isMuted
+      audioRef.current.play().catch(error => console.error('Audio playback failed:', error))
+      setIsMusicPlaying(true)
+    }
+  }, [isMuted])
+
+  const stopMusic = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause()
+      audioRef.current.currentTime = 0
+      setIsMusicPlaying(false)
+    }
+  }, [])
+
+  const toggleMute = useCallback(() => {
+    setIsMuted(prev => !prev)
+    if (audioRef.current) {
+      audioRef.current.muted = !isMuted
+    }
+  }, [isMuted])
+
+  const startVisualShuffle = useCallback(() => {
+    setIsShuffling(true)
+    const shuffleStep = () => {
+      setParticipants(prevParticipants => {
+        const shuffled = [...prevParticipants]
+        for (let i = 0; i < 2; i++) {
+          const idx1 = Math.floor(Math.random() * shuffled.length)
+          const idx2 = Math.floor(Math.random() * shuffled.length)
+          const temp = shuffled[idx1]
+          shuffled[idx1] = shuffled[idx2]
+          shuffled[idx2] = temp
+        }
+        return shuffled
+      })
+    }
+
+    shuffleIntervalRef.current = setInterval(shuffleStep, 500)
+
+    setTimeout(() => {
+      if (shuffleIntervalRef.current) {
+        clearInterval(shuffleIntervalRef.current)
+      }
+      setIsShuffling(false)
+    }, SHUFFLE_DURATION)
+  }, [])
+
   const revealCards = useCallback(() => {
     setIsRevealing(true)
-    const shuffledParticipants = shuffleArray([...participants])
-    const intervalDuration = CARD_REVEAL_DURATION / shuffledParticipants.length
+    playMusic(CARD_REVEAL_MUSIC)
+    const intervalDuration = CARD_REVEAL_DURATION / participants.length
 
-    shuffledParticipants.forEach((participant, index) => {
+    participants.forEach((participant, index) => {
       setTimeout(() => {
         setRevealedCards(prev => [...prev, participant.id])
-        if (index === shuffledParticipants.length - 1) {
+        if (index === participants.length - 1) {
           setIsRevealing(false)
+          startVisualShuffle()
         }
       }, index * intervalDuration)
     })
-  }, [participants])
+  }, [participants, playMusic, startVisualShuffle])
 
   const startRaffle = useCallback(() => {
-    if (isRevealing) return
+    if (isRevealing || isShuffling) {
+      return
+    }
     if (revealedCards.length === 0) {
       revealCards()
       return
     }
 
     setIsRaffleInProgress(true)
+    setIsWaiting(true)
+    playMusic(RAFFLE_MUSIC)
     const shuffledParticipants = shuffleArray([...participants])
     const selectedWinners = shuffledParticipants.slice(0, 3)
     
@@ -132,8 +245,11 @@ export default function RafflePage() {
       }
     }
 
-    revealWinners(0)
-  }, [isRevealing, revealedCards, participants, revealCards])
+    setTimeout(() => {
+      setIsWaiting(false)
+      revealWinners(0)
+    }, INITIAL_WAIT_PERIOD)
+  }, [isRevealing, isShuffling, revealedCards, participants, revealCards, playMusic])
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-100 to-white">
@@ -151,8 +267,8 @@ export default function RafflePage() {
                   <Card key={winner.id} className="p-4 w-64 h-64 flex flex-col justify-between border-4 border-yellow-400 animate-pulse">
                     <CardContent>
                       <p className="text-4xl mb-2">{emojis[index % emojis.length]}</p>
+                      <p className="text-sm text-gray-600 mb-1">{kundendienstHelden[index % kundendienstHelden.length]}</p>
                       <p className="font-bold text-xl">{winner.firstName} {winner.lastName}</p>
-                      <p className="text-sm text-gray-600">{superheroNames[index % superheroNames.length]}</p>
                       <p className="text-lg text-yellow-600 mt-2">Gewinner {index + 1}</p>
                     </CardContent>
                   </Card>
@@ -168,29 +284,53 @@ export default function RafflePage() {
             </section>
           )}
 
-          <Button 
-            onClick={startRaffle} 
-            disabled={isRaffleInProgress || raffleComplete || participants.length < 3}
-            className="text-2xl py-6 px-12 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-all duration-200 transform hover:scale-105 mb-4"
-          >
-            {isRevealing ? 'Karten werden aufgedeckt...' :
-             isRaffleInProgress ? 'Verlosung läuft...' : 
-             raffleComplete ? 'Verlosung abgeschlossen' : 
-             revealedCards.length === 0 ? 'Lose aufdecken' : 'Verlosung starten'}
-          </Button>
-          
-          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4">
-            {participants.map((participant, index) => (
-              <ParticipantCard
-                key={participant.id}
-                participant={participant}
-                isRevealed={revealedCards.includes(participant.id)}
-                index={index}
-              />
-            ))}
+          <div className="flex flex-col items-center space-y-4 mb-4">
+            <AnimatedButton
+              onClick={startRaffle}
+              disabled={isRaffleInProgress || raffleComplete || participants.length < 3 || isRevealing || isShuffling}
+              isWaiting={isWaiting}
+            >
+              {isRevealing ? 'Karten werden aufgedeckt...' :
+               isShuffling ? 'Karten werden gemischt...' :
+               isWaiting ? 'Spannung steigt...' :
+               isRaffleInProgress ? 'Verlosung läuft...' : raffleComplete ? 'Verlosung abgeschlossen' :
+               revealedCards.length === 0 ? 'Lose aufdecken' : 'Verlosung starten'}
+            </AnimatedButton>
+            <div className="flex space-x-4">
+              <Button
+                onClick={toggleMute}
+                className="py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center"
+                aria-label={isMuted ? "Ton einschalten" : "Ton ausschalten"}
+              >
+                {isMuted ? <VolumeX className="mr-2" size={24} /> : <Volume2 className="mr-2" size={24} />}
+                {isMuted ? "Ton ein" : "Ton aus"}
+              </Button>
+              <Button
+                onClick={isMusicPlaying ? stopMusic : () => playMusic(RAFFLE_MUSIC)}
+                className="py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center"
+                aria-label={isMusicPlaying ? "Musik stoppen" : "Musik abspielen"}
+              >
+                {isMusicPlaying ? <Music2 className="mr-2" size={24} /> : <Music className="mr-2" size={24} />}
+                {isMusicPlaying ? "Musik stoppen" : "Musik spielen"}
+              </Button>
+            </div>
           </div>
+          
+          <AnimatePresence>
+            <motion.div layout className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4">
+              {participants.map((participant, index) => (
+                <ParticipantCard
+                  key={participant.id}
+                  participant={participant}
+                  isRevealed={revealedCards.includes(participant.id)}
+                  index={index}
+                />
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </section>
       </main>
+      <audio ref={audioRef} />
       <style jsx global>{`
         .card-container {
           width: 120px;
@@ -219,6 +359,15 @@ export default function RafflePage() {
         .card-front {
           background-color: white;
           transform: rotateY(180deg);
+        }
+        @keyframes gradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
         }
       `}</style>
     </div>
