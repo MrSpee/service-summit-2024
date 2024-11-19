@@ -1,12 +1,16 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { getLeads, updateLeadAction } from '@/app/actions'
 import { Lead } from '@/lib/kv-utils'
 import confetti from 'canvas-confetti'
 import { motion } from 'framer-motion'
+
+// Adjustable timing constants (in milliseconds)
+const CARD_REVEAL_DURATION = 10000; // Total duration for revealing all cards
+const WINNER_REVEAL_INTERVAL = 2000; // Time between revealing each winner
 
 const emojis = ['😎', '🦸', '🚀', '💡', '🔥', '⚡', '🌟', '🦾', '🧠', '🔮', '🤖', '💬', '🗨️', '📱', '💻', '🎙️', '🔊', '👾', '🤯', '🌈', '🎭', '🎮', '🕹️', '📡', '🛰️', '🔬', '🔭', '💎', '🔋', '🔌']
 
@@ -76,17 +80,16 @@ export default function RafflePage() {
     fetchParticipants()
   }, [])
 
-  const calculateWinningChance = (totalParticipants: number, numberOfPrizes: number = 3): string => {
+  const calculateWinningChance = useCallback((totalParticipants: number, numberOfPrizes: number = 3): string => {
     if (totalParticipants === 0) return '0%'
     const chance = (numberOfPrizes / totalParticipants) * 100
     return chance.toFixed(2) + '%'
-  }
+  }, [])
 
-  const revealCards = () => {
+  const revealCards = useCallback(() => {
     setIsRevealing(true)
     const shuffledParticipants = shuffleArray([...participants])
-    const revealDuration = 10000 // 10 seconds
-    const intervalDuration = revealDuration / shuffledParticipants.length
+    const intervalDuration = CARD_REVEAL_DURATION / shuffledParticipants.length
 
     shuffledParticipants.forEach((participant, index) => {
       setTimeout(() => {
@@ -96,9 +99,9 @@ export default function RafflePage() {
         }
       }, index * intervalDuration)
     })
-  }
+  }, [participants])
 
-  const startRaffle = () => {
+  const startRaffle = useCallback(() => {
     if (isRevealing) return
     if (revealedCards.length === 0) {
       revealCards()
@@ -122,7 +125,7 @@ export default function RafflePage() {
           })
           await updateLeadAction(winner.id, { isWinner: true })
           revealWinners(index + 1)
-        }, 2000)
+        }, WINNER_REVEAL_INTERVAL)
       } else {
         setIsRaffleInProgress(false)
         setRaffleComplete(true)
@@ -130,7 +133,7 @@ export default function RafflePage() {
     }
 
     revealWinners(0)
-  }
+  }, [isRevealing, revealedCards, participants, revealCards])
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-100 to-white">
