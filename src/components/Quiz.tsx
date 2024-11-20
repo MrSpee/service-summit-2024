@@ -12,60 +12,60 @@ import { AlertCircle } from 'lucide-react'
 const questions = [
   {
     topic: "Grundlagen",
-    question: "Was ist einer der größten Vorteile von Conversational AI im Kundenservice?",
+    question: "Größter Vorteil von Conversational AI im Kundenservice?",
     options: [
-      "Verringerung der Anrufhäufigkeit, wodurch Teams entlastet werden.",
-      "Automatisierung von Standardanfragen, wodurch Mitarbeiter mehr Zeit für wertschöpfende und komplexe Kundeninteraktionen haben.",
-      "Erhöhung der Kundenbindung durch interaktive und spielerische Unterhaltung.",
-      "Automatisches Einschalten des \"Bitte warten\"-Modus mit stilvoller Musik."
+      "Verringerung der Anrufhäufigkeit",
+      "Automatisierung von Standardanfragen für komplexere Interaktionen",
+      "Kundenbindung durch interaktive Unterhaltung",
+      "Automatischer \"Bitte warten\"-Modus mit Musik"
     ],
     correctAnswer: 1,
     tip: "Denken Sie daran: KI ist wie ein fleißiger Praktikant, der nie Kaffee trinkt, nie müde wird und immer lächelt... auch montags um 8 Uhr!"
   },
   {
     topic: "Technologie",
-    question: "Welche der folgenden Technologien wird am häufigsten genutzt, um die Sprachverarbeitung in Conversational AI zu ermöglichen?",
+    question: "Häufigste Technologie für Sprachverarbeitung in Conversational AI?",
     options: [
-      "Machine Learning-basierte Bildanalyse",
-      "Natural Language Processing (NLP) zur Analyse und Interpretation menschlicher Sprache",
-      "Erweiterte Echtzeit-Datenvisualisierung",
-      "Blockchain zur Verifizierung von Sprachmustern"
+      "Machine Learning-Bildanalyse",
+      "Natural Language Processing (NLP)",
+      "Echtzeit-Datenvisualisierung",
+      "Blockchain für Sprachmuster"
     ],
     correctAnswer: 1,
     tip: "Stellen Sie sich vor, Sie hätten einen Supercomputer, der Ihre Witze versteht... und trotzdem darüber lacht!"
   },
   {
     topic: "Anwendungen",
-    question: "In welchem dieser Bereiche kann Conversational AI die Kundenerfahrung besonders verbessern?",
+    question: "Wo verbessert Conversational AI die Kundenerfahrung am meisten?",
     options: [
-      "Automatisierte Wettervorhersagen für spezielle Zielgruppen",
-      "Effizientes Kundenservice-Management mit optimierten Antwortzeiten und erhöhter Kundenzufriedenheit",
-      "Unterstützung bei der Erstellung von Finanzberichten für multinationale Konzerne",
-      "Analyse und Steuerung von logistischen Prozessen im Supply Chain Management"
+      "Automatisierte Wettervorhersagen",
+      "Effizientes Kundenservice-Management",
+      "Erstellung von Finanzberichten",
+      "Steuerung logistischer Prozesse"
     ],
     correctAnswer: 1,
     tip: "Denken Sie an den Bereich, wo Menschen am verzweifeltsten nach Hilfe suchen... nein, nicht beim Zusammenbauen von IKEA-Möbeln!"
   },
   {
     topic: "Implementierung",
-    question: "Welcher Aspekt ist entscheidend, um einen Implementierungspartner für Conversational AI erfolgreich auszuwählen?",
+    question: "Wichtigster Aspekt bei der Wahl eines Conversational AI-Partners?",
     options: [
-      "Die Reputation des Partners in der Branche",
-      "Die Anzahl der Zertifikate des Partners in verwandten Technologien",
-      "Die Verfügbarkeit des Partners für kurzfristige technische Schulungen",
-      "Die Fähigkeit des Partners, umfassende End-to-End-Lösungen zu bieten – von der strategischen Beratung bis hin zur erfolgreichen Umsetzung"
+      "Branchenreputation",
+      "Anzahl der Zertifikate",
+      "Verfügbarkeit für Schulungen",
+      "Fähigkeit zu umfassenden End-to-End-Lösungen"
     ],
     correctAnswer: 3,
     tip: "Suchen Sie jemanden, der Ihr Projekt von A bis Z begleitet... nicht nur jemanden, der Ihnen beibringt, wie man 'Hallo Welt!' auf KI-isch sagt!"
   },
   {
     topic: "Agentic AI",
-    question: "Was kann die neue Generation der AI Bots namens Agentic AI von Cognigy NICHT?",
+    question: "Was kann Cognigy's Agentic AI NICHT?",
     options: [
-      "Menschenähnliches Denkvermögen: Selbstständiges Analysieren von Anfragen und Vorschlagen der besten Vorgehensweise.",
-      "Autonome Entscheidungsfindung: Dynamische Navigation und Nutzung von Tools zur erfolgreichen Erledigung von Aufgaben.",
-      "Kollaborative KI: KI-Agenten können sich mit anderen KI-Agenten und Menschen beraten, um die effizientesten und genauesten Lösungen zu finden.",
-      "Servieren deines hyperpersonalisierten Kaffees, z.B. dein koffeinfreier Kaffee mit Hafermilch"
+      "Selbstständiges Analysieren und Vorschlagen",
+      "Autonome Entscheidungsfindung und Tool-Nutzung",
+      "Kollaboration mit KI-Agenten und Menschen",
+      "Servieren von hyperpersonalisiertem Kaffee"
     ],
     correctAnswer: 3,
     tip: "KI kann vieles, aber manche Dinge bleiben menschlich. Zum Beispiel der Kaffee, der schmeckt, als hätte ihn ein Praktikant an seinem ersten Tag gemacht!"
