@@ -134,7 +134,7 @@ export default function RafflePage() {
     fetchParticipants()
   }, [])
 
-  const calculateWinningChance = useCallback((totalParticipants: number, numberOfPrizes: number = 3): string => {
+  const calculateWinningChance = useCallback((totalParticipants: number, numberOfPrizes: number = 6): string => {
     if (totalParticipants === 0) return '0%'
     const chance = (numberOfPrizes / totalParticipants) * 100
     return chance.toFixed(2) + '%'
@@ -223,7 +223,7 @@ export default function RafflePage() {
     setIsWaiting(true)
     playMusic(RAFFLE_MUSIC)
     const shuffledParticipants = shuffleArray([...participants])
-    const selectedWinners = shuffledParticipants.slice(0, 3)
+    const selectedWinners = shuffledParticipants.slice(0, 6)
     
     const revealWinners = async (index: number) => {
       if (index < selectedWinners.length) {
@@ -256,13 +256,13 @@ export default function RafflePage() {
       <main className="flex-grow container mx-auto px-4 py-8">
         <section className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-2">Deloitte & Cognigy - Conversational AI Quiz</h1>
-          <h2 className="text-2xl mb-4">Verlosung der 3 Hauptgewinne unter {participantCount} Teilnehmer</h2>
+          <h2 className="text-2xl mb-4">Verlosung der 6 Hauptgewinne unter {participantCount} Teilnehmer</h2>
           <p className="text-xl mb-8">Deine Gewinnchance ist: {calculateWinningChance(participantCount)}</p>
           
           {winners.length > 0 && (
             <div className="mb-8">
               <h3 className="text-3xl font-bold mb-4">Unsere Gewinner</h3>
-              <div className="flex justify-center space-x-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-items-center">
                 {winners.map((winner, index) => (
                   <Card key={winner.id} className="p-4 w-64 h-64 flex flex-col justify-between border-4 border-yellow-400 animate-pulse">
                     <CardContent>
@@ -287,7 +287,7 @@ export default function RafflePage() {
           <div className="flex flex-col items-center space-y-4 mb-4">
             <AnimatedButton
               onClick={startRaffle}
-              disabled={isRaffleInProgress || raffleComplete || participants.length < 3 || isRevealing || isShuffling}
+              disabled={isRaffleInProgress || raffleComplete || participants.length < 6 || isRevealing || isShuffling}
               isWaiting={isWaiting}
             >
               {isRevealing ? 'Karten werden aufgedeckt...' :
