@@ -10,10 +10,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Volume2, VolumeX, Music, Music2 } from 'lucide-react'
 
 // Adjustable timing constants (in milliseconds)
-const CARD_REVEAL_DURATION = 22000; // Total duration for revealing all cards
-const SHUFFLE_DURATION = 15000; // Duration for shuffle animation
-const WINNER_REVEAL_INTERVAL = 5000; // Time between revealing each winner
-const INITIAL_WAIT_PERIOD = 8000; // 5 seconds wait before first winner is drawn
+const CARD_REVEAL_DURATION = 10000; // Total duration for revealing all cards
+const SHUFFLE_DURATION = 5000; // Duration for shuffle animation
+const WINNER_REVEAL_INTERVAL = 3000; // Time between revealing each winner
+const INITIAL_WAIT_PERIOD = 5000; // 5 seconds wait before first winner is drawn
 
 // Music file paths
 const CARD_REVEAL_MUSIC = '/card-reveal-music.mp3';
