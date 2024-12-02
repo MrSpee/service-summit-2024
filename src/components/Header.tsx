@@ -1,32 +1,27 @@
-import Link from 'next/link'
-
 export function Header() {
   return (
-    <header className="bg-gradient-to-r from-blue-600 to-blue-400 border-b">
-      <div className="container mx-auto px-4 py-4">
-        <Link href="/" className="flex items-center space-x-4">
-          <svg
-            width="50"
-            height="50"
-            viewBox="0 0 50 50"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="bg-white rounded-full p-1"
-          >
-            <rect x="5" y="5" width="40" height="40" rx="20" fill="#4A90E2" />
-            <rect x="15" y="15" width="8" height="8" rx="2" fill="white" />
-            <rect x="27" y="15" width="8" height="8" rx="2" fill="white" />
-            <path d="M15 30H35" stroke="white" strokeWidth="2" strokeLinecap="round" />
-            <path d="M20 35H30" stroke="white" strokeWidth="2" strokeLinecap="round" />
-            <circle cx="19" cy="19" r="2" fill="#4A90E2" />
-            <circle cx="31" cy="19" r="2" fill="#4A90E2" />
+    <header className="bg-christmas-red text-snow-white p-2 sm:p-3 shadow-md relative overflow-hidden">
+      <div className="absolute inset-0 opacity-15 bg-christmas-pattern"></div>
+      <div className="container mx-auto flex justify-between items-center relative z-10">
+        <h1 className="text-lg sm:text-xl md:text-2xl font-bold">Deloitte Weihnachts-Quiz</h1>
+        <div className="flex items-center space-x-1 sm:space-x-2">
+          <span className="text-christmas-gold font-semibold text-xs sm:text-sm">Frohe Festtage!</span>
+          <svg className="w-16 h-8 sm:w-20 sm:h-10" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Sleigh */}
+            <path d="M70 35 Q75 25 80 35 L90 35 Q95 25 90 15 L70 15 Q65 25 70 35Z" fill="#8B4513" />
+            <path d="M65 35 L95 35" stroke="#8B4513" strokeWidth="2" />
+            
+            {/* Reindeer */}
+            <path d="M10 35 Q15 20 20 35 M15 27 L25 27" stroke="#8B4513" strokeWidth="2" />
+            <circle cx="17" cy="22" r="2" fill="#8B4513" />
+            <path d="M13 18 L15 14 M21 18 L19 14" stroke="#8B4513" strokeWidth="1" />
+            
+            {/* Reins */}
+            <path d="M25 30 Q45 10 70 30" stroke="#FFD700" strokeWidth="1" strokeDasharray="2 2" />
           </svg>
-          <div className="text-white">
-            <h1 className="text-2xl font-bold">Service Summit 2024 Hamburg</h1>
-            <p className="text-sm mt-1">Conversational AI | Mehr als nur Antworten – schaffen Sie Verbindungen, die sich auszahlen</p>
-          </div>
-        </Link>
+        </div>
       </div>
     </header>
   )
 }
+

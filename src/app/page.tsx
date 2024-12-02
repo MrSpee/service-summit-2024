@@ -1,100 +1,73 @@
 'use client'
-
 import { useState } from 'react'
-import Image from 'next/image'
-import { Quiz } from '@/components/Quiz'
-import { RegistrationForm } from '@/components/RegistrationForm'
-import Teaser from '@/components/Teaser'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { X } from 'lucide-react'
+import questions from './data/questions'
 
-export default function LandingPage() {
-  const [quizCompleted, setQuizCompleted] = useState(false)
+export default function Home() {
+  const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
-  const [showInfoModal, setShowInfoModal] = useState(false)
+  const [showScore, setShowScore] = useState(false)
 
-  const handleQuizComplete = (completedScore: number) => {
-    setQuizCompleted(true)
-    setScore(completedScore)
-  }
+  const handleAnswerClick = (isCorrect: boolean) => {
+    if (isCorrect) setScore(score + 1)
 
-  const toggleInfoModal = () => {
-    setShowInfoModal(!showInfoModal)
+    const nextQuestion = currentQuestion + 1
+    if (nextQuestion < questions.length) {
+      setCurrentQuestion(nextQuestion)
+    } else {
+      setShowScore(true)
+    }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white">
-      <main className="container mx-auto px-4 py-8">
-        <Card className="max-w-3xl mx-auto">
-          <CardHeader>
-            <CardTitle className="text-2xl sm:text-3xl font-bold text-center text-blue-600">
-              Deloitte & Cognigy präsentieren
-              <br />
-              das Conversational AI Quiz
-            </CardTitle>
-            <p className="text-xl sm:text-2xl font-semibold text-center text-gray-700 mt-2">
-              Testen Sie Ihr Wissen und
-              <br />
-              gewinnen Sie{' '}
-              <span 
-                className="text-blue-600 underline cursor-pointer" 
-                onClick={toggleInfoModal}
-                onKeyPress={(e) => e.key === 'Enter' && toggleInfoModal()}
-                tabIndex={0}
-                role="button"
-                aria-label="Mehr Informationen zu den Preisen"
-              >
-                tolle Preise
-              </span>
-              !
-            </p>
-          </CardHeader>
-          <CardContent>
-            {!quizCompleted ? (
-              <Quiz onComplete={handleQuizComplete} />
-            ) : (
-              <RegistrationForm score={score} totalQuestions={5} />
-            )}
-          </CardContent>
-        </Card>
-        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8 mt-8">
-          <Image
-            src="/deloitte-logo.png"
-            alt="Deloitte Logo"
-            width={180}
-            height={60}
-            className="object-contain w-32 sm:w-44 md:w-[180px]"
-          />
-          <Image
-            src="/cognigy-logo.png"
-            alt="Cognigy Logo"
-            width={240}
-            height={60}
-            className="object-contain w-40 sm:w-56 md:w-[240px]"
-          />
+    <>
+      <div className="text-center mb-6">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-christmas-red mb-2">
+          Bereit für die Weihnachts-Challenge?
+        </h1>
+        <p className="text-base sm:text-lg md:text-xl text-pine-green">
+          Alliance Manager, zeigt euer Festtagswissen schneller als eure Vertragsabschlüsse!
+        </p>
+      </div>
+      {showScore ? (
+        <div className="text-center bg-snow-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-md border-2 border-christmas-green">
+          <h2 className="text-xl sm:text-2xl md:text-3xl text-christmas-green mb-2">Ho Ho Ho! Quizmaster-Ergebnis:</h2>
+          <p className="text-lg sm:text-xl md:text-2xl text-christmas-gold">
+            Sie haben {score} von {questions.length} Fragen richtig beantwortet!
+          </p>
+          <p className="mt-2 text-sm sm:text-base text-pine-green">
+            {score === questions.length
+              ? "Perfekt! Sie sind Deloitte's Weihnachtsexperte!"
+              : score > questions.length / 2
+              ? "Gut gemacht! Fast so präzise wie unsere Wirtschaftsprüfer!"
+              : "Naja, Rom wurde auch nicht an einem Tag gebaut. Wie wäre es mit einer Beratung zu Weihnachtsbräuchen?"}
+          </p>
         </div>
-        <Teaser />
-      </main>
-
-      {showInfoModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full mx-4">
-            <div className="flex justify-between items-start mb-4">
-              <h3 className="text-lg font-semibold">Informationen zur Verlosung</h3>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={toggleInfoModal}
-                aria-label="Schließen"
+      ) : (
+        <div className="bg-snow-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-md border-2 border-christmas-green">
+          <h2 className="text-lg sm:text-xl md:text-2xl mb-2 text-christmas-green">
+            Frage {currentQuestion + 1}/{questions.length}
+          </h2>
+          <div className="w-full bg-pine-green rounded-full h-2 mb-3">
+            <div 
+              className="bg-christmas-red h-2 rounded-full" 
+              style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+            ></div>
+          </div>
+          <p className="text-base sm:text-lg mb-4 text-pine-green">{questions[currentQuestion].questionText}</p>
+          <div className="grid grid-cols-1 gap-2">
+            {questions[currentQuestion].answerOptions.map((answerOption, index) => (
+              <button
+                key={index}
+                onClick={() => handleAnswerClick(answerOption.isCorrect)}
+                className="bg-christmas-red text-snow-white p-2 rounded hover:bg-cranberry transition-colors text-sm sm:text-base"
               >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-            <p>Die Verlosung der wertvollen Preise findet täglich um 15:45 Uhr am Deloitte Stand statt.</p>
+                {answerOption.answerText}
+              </button>
+            ))}
           </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
+
