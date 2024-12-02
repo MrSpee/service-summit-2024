@@ -1,3 +1,5 @@
+'use server'
+
 import { kv } from '@vercel/kv'
 import { nanoid } from 'nanoid'
 
@@ -104,5 +106,9 @@ export async function deleteLeadAction(id: string) {
     console.error('Error deleting lead:', error)
     throw error
   }
+}
+
+export async function checkPassword(password: string) {
+  return password === process.env.ADMIN_PASSWORD
 }
 

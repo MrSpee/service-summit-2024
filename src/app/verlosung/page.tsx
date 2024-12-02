@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { getLeads, updateLeadAction } from '@/app/actions'
 import { Lead } from '@/lib/kv-utils'
