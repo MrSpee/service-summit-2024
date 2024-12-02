@@ -23,8 +23,8 @@ export default function RootLayout({
         <main className="flex-grow flex flex-col items-center justify-start pt-4">
           {children}
         </main>
-        <Analytics /> 
         <Footer />
+        <Analytics /> 
       </body>
     </html>
   )
