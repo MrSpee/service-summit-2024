@@ -4,8 +4,7 @@ import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
-import { getLeads, updateLeadAction, deleteLeadAction, logout } from '@/app/actions'
-import { Lead } from '@/lib/kv-utils'
+import { getLeads, updateLeadAction, deleteLeadAction } from '@/app/actions'
 import {
   Accordion,
   AccordionContent,
@@ -14,14 +13,22 @@ import {
 } from "@/components/ui/accordion"
 import { format } from 'date-fns'
 import { de } from 'date-fns/locale'
-import { useRouter } from 'next/navigation'
+
+interface Lead {
+  id: string;
+  firstName: string;
+  quizScore: number;
+  registrationDate: string;
+  inDraw: boolean;
+  isWinner: boolean;
+  notes: string;
+}
 
 export default function AdminDashboard() {
   const [leads, setLeads] = useState<Lead[]>([])
   const [selectedLeads, setSelectedLeads] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const router = useRouter()
 
   useEffect(() => {
     const fetchLeads = async () => {
@@ -101,16 +108,6 @@ export default function AdminDashboard() {
     }
   }
 
-  const handleLogout = async () => {
-    try {
-      await logout()
-      router.push('/login')
-    } catch (err) {
-      console.error('Fehler beim Logout:', err)
-      setError('Fehler beim Logout. Bitte versuchen Sie es später erneut.')
-    }
-  }
-
   const totalLeads = leads.length
   const participantsInDraw = leads.filter(lead => lead.inDraw).length
   const winners = leads.filter(lead => lead.isWinner).length
@@ -144,7 +141,6 @@ export default function AdminDashboard() {
               <p className="text-xl font-semibold">Gewinner</p>
               <p className="text-3xl font-bold">{winners}</p>
             </div>
-            <Button onClick={handleLogout} variant="outline">Logout</Button>
           </div>
         </div>
       </div>
@@ -174,7 +170,7 @@ export default function AdminDashboard() {
                 />
                 <AccordionTrigger className="flex-1 flex justify-between items-center">
                   <div className="flex flex-col">
-                    <span className="font-semibold">{lead.firstName} {lead.lastName}</span>
+                    <span className="font-semibold">{lead.firstName}</span>
                     <span className="text-sm text-gray-500 mt-1">
                       {format(new Date(lead.registrationDate), 'dd.MM.yyyy HH:mm', { locale: de })}
                     </span>
@@ -184,12 +180,12 @@ export default function AdminDashboard() {
               <AccordionContent className="p-4 bg-white">
                 <form onSubmit={(e) => handleUpdateLead(e, lead)} className="space-y-4">
                   <div>
-                    <label className="block font-bold">E-Mail:</label>
-                    <p>{lead.email}</p>
+                    <label className="block font-bold">Vorname:</label>
+                    <p>{lead.firstName}</p>
                   </div>
                   <div>
-                    <label className="block font-bold">Quiz-Punktzahl:</label>
-                    <p>{lead.quizScore}</p>
+                    <label className="block font-bold">Teilnahme an der Verlosung:</label>
+                    <p>{lead.inDraw ? 'Ja' : 'Nein'}</p>
                   </div>
                   <div>
                     <label className="block font-bold mb-2">Notizen:</label>
@@ -228,3 +224,4 @@ export default function AdminDashboard() {
     </div>
   )
 }
+
