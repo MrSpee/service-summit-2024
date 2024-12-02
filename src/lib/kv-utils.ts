@@ -3,8 +3,6 @@ import { kv } from '@vercel/kv'
 export type Lead = {
   id: string
   firstName: string
-  lastName: string
-  email: string
   quizScore: number
   registrationDate: string
   inDraw: boolean

@@ -61,7 +61,7 @@ export default function AdminDashboard() {
         inDraw: updatedInDraw,
         isWinner: updatedIsWinner
       }
-      await updateLeadAction(lead.id, formData)
+      await updateLeadAction(lead.id, { notes: updatedNotes, inDraw: updatedInDraw, isWinner: updatedIsWinner })
       setLeads(leads.map(l => l.id === lead.id ? updatedLead : l))
     } catch (err) {
       console.error('Fehler beim Aktualisieren des Leads:', err)

@@ -7,8 +7,7 @@ import {Footer} from '../components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Deloitte's Weihnachts-Quiz-Spektakel",
-  description: 'Ein festliches Quiz über Weihnachten und Deloitte',
+  title: "Deloitte's Weihnachts-Quiz-Spektakel"
 }
 
 export default function RootLayout({

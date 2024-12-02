@@ -108,7 +108,3 @@ export async function deleteLeadAction(id: string) {
   }
 }
 
-export async function checkPassword(password: string) {
-  return password === process.env.ADMIN_PASSWORD
-}
-
