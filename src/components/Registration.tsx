@@ -54,7 +54,7 @@ export function Registration({ score, totalQuestions }: RegistrationProps) {
         <form onSubmit={handleRegistration} className="mt-3 text-left">
           <div className="mb-3">
             <label htmlFor="firstName" className="block text-pine-green text-sm font-bold mb-1">
-              Vorname
+              Mein Name
             </label>
             <input
               type="text"
@@ -75,7 +75,7 @@ export function Registration({ score, totalQuestions }: RegistrationProps) {
                 required
               />
               <span className="text-sm text-pine-green">
-                Ich bin einverstanden, groß abzustauben!
+                Ich bin einverstanden, dabei zu sein! 🎅🎄🎁
               </span>
             </label>
           </div>

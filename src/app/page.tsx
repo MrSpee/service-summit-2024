@@ -45,14 +45,20 @@ export default function Home() {
     <div className="flex flex-col items-center justify-start min-h-screen px-4 py-4 text-center">
       {!showScore && (
         <div className="max-w-md mb-4">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-christmas-red mb-4">
+          <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-christmas-red mb-4">
             Unser festliches BDM Community Quiz
-          </h1>
+          </h2>
           <p className="text-sm sm:text-base md:text-lg text-pine-green mb-4">
-            Ho ho ho, liebe BDM Community! Taucht ein in unser weihnachtliches Quizvergnügen und testet euer Festtagswissen!
+            Ho ho ho, liebe Alliances & Ecosystems Kollegen! Taucht ein in unser weihnachtliches Quizvergnügen und testet euer Festtagswissen!
           </p>
           <p className="text-sm sm:text-base md:text-lg text-christmas-green font-semibold">
-            Macht mit und gewinnt tolle Preise! Jeder Teilnehmer hat die gleiche Chance zu gewinnen, unabhängig von der Anzahl der richtigen Antworten.
+          Nehmt teil und sichert euch großartige Gewinne! 🎁 
+          </p>
+          <p className="text-sm sm:text-base md:text-lg text-christmas-green font-semibold">
+          Ein herzliches Dankeschön für euren Einsatz und eure Unterstützung im Jahr 2024. <br/> So langsam heißt es: Zurücklehnen, entspannen und eine wohlverdiente Auszeit im Kreise eurer Familie und Freunde genießen. Ihr habt es euch verdient! 🎉 
+          </p>
+          <p className="text-sm sm:text-base md:text-lg text-christmas-red font-semibold">
+          Euer Steffen & Wolfgang 
           </p>
         </div>
       )}
