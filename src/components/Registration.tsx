@@ -31,16 +31,34 @@ export function Registration({ score, totalQuestions }: RegistrationProps) {
     }
   }
 
+  const getScoreMessage = () => {
+    const percentage = (score / totalQuestions) * 100
+    if (percentage === 100) {
+      return "Wow! Du bist ein wahres Weihnachtsgenie! 🎄🌟"
+    } else if (percentage >= 80) {
+      return "Fantastisch! Du kennst dich richtig gut aus! 🎅"
+    } else if (percentage >= 60) {
+      return "Gut gemacht! Du hast ein solides Weihnachtswissen! 🦌"
+    } else if (percentage >= 40) {
+      return "Nicht schlecht! Du bist auf dem richtigen Weg! ☃️"
+    } else {
+      return "Hey, du hast mitgemacht und das zählt! 🎁"
+    }
+  }
+
   return (
     <div className="bg-snow-white p-4 rounded-lg shadow-lg w-full max-w-md border-2 border-christmas-green">
       <h2 className="text-xl sm:text-2xl md:text-3xl text-christmas-green mb-3">
         Quiz abgeschlossen!
       </h2>
-      <p className="text-lg sm:text-xl md:text-2xl text-christmas-gold mb-3">
-        Du hast {score} von {totalQuestions} Fragen richtig beantwortet!
+      <p className="text-lg sm:text-xl md:text-2xl text-christmas-red mb-3">
+        {getScoreMessage()}
       </p>
-      <p className="text-sm sm:text-base text-pine-green mb-3">
-        Toll gemacht! Unabhängig von deiner Punktzahl hast du die gleiche Chance, einen unserer fantastischen Weihnachtspreise zu gewinnen. Das Wichtigste ist, dass du mitgemacht und hoffentlich etwas Neues gelernt hast!
+      <p className="text-base sm:text-lg text-pine-green mb-3">
+        Du hast {score} von {totalQuestions} Fragen richtig beantwortet.
+      </p>
+      <p className="text-sm sm:text-base text-pine-green mb-4 font-semibold">
+        Aber keine Sorge! Unabhängig von deiner Punktzahl hast du die gleiche Chance, einen unserer fantastischen Weihnachtspreise zu gewinnen. Jeder Teilnehmer hat die gleiche Gewinnchance!
       </p>
       {!showRegistration && !registrationComplete && (
         <button
@@ -54,7 +72,7 @@ export function Registration({ score, totalQuestions }: RegistrationProps) {
         <form onSubmit={handleRegistration} className="mt-3 text-left">
           <div className="mb-3">
             <label htmlFor="firstName" className="block text-pine-green text-sm font-bold mb-1">
-              Mein Name
+              Vorname
             </label>
             <input
               type="text"
@@ -75,7 +93,7 @@ export function Registration({ score, totalQuestions }: RegistrationProps) {
                 required
               />
               <span className="text-sm text-pine-green">
-                Ich bin einverstanden, dabei zu sein! 🎅🎄🎁
+                Ich bin einverstanden, groß abzustauben!
               </span>
             </label>
           </div>
@@ -96,7 +114,7 @@ export function Registration({ score, totalQuestions }: RegistrationProps) {
             Vielen Dank für deine Teilnahme!
           </p>
           <p className="text-base text-pine-green mt-2">
-            Die Verlosung findet am 12.12. um 12:12 statt (ca. 10 Mins). Ein Invite folgt. Wenn du nicht dabei sein kannst, werden wir dich per Email benachrichtigen, falls du einer der Gewinner bist. Viel Glück 🍀🦄🎅
+          Die Verlosung findet am 12.12. um 12:12 statt (ca. 10 Mins). Ein Invite folgt. Wenn du nicht dabei sein kannst, werden wir dich per Email benachrichtigen, falls du einer der Gewinner bist. Viel Glück 🍀🦄🎅
           </p>
         </div>
       )}
