@@ -188,6 +188,10 @@ export default function AdminDashboard() {
                     <p>{lead.inDraw ? 'Ja' : 'Nein'}</p>
                   </div>
                   <div>
+                    <label className="block font-bold">Richtige Antworten:</label>
+                    <p>{lead.quizScore}</p>
+                  </div>
+                  <div>
                     <label className="block font-bold mb-2">Notizen:</label>
                     <Textarea
                       name="notes"
