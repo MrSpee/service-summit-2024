@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { addLead } from '../app/actions'
+import confetti from 'canvas-confetti'
 
 interface RegistrationProps {
   score: number
@@ -22,6 +23,11 @@ export function Registration({ score, totalQuestions }: RegistrationProps) {
       if (result.success) {
         setRegistrationComplete(true)
         setShowRegistration(false)
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        })
       } else {
         setRegistrationError(result.error || 'Registration failed. Please try again.')
       }
@@ -47,25 +53,26 @@ export function Registration({ score, totalQuestions }: RegistrationProps) {
   }
 
   return (
-    <div className="bg-snow-white p-4 rounded-lg shadow-lg w-full max-w-md border-2 border-christmas-green">
+    <div className="bg-snow-white p-4 rounded-lg shadow-lg w-full max-w-md border-2 border-christmas-green relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-christmas-red via-christmas-green to-christmas-gold"></div>
       <h2 className="text-xl sm:text-2xl md:text-3xl text-christmas-green mb-3">
-        Quiz abgeschlossen!
+        Quiz abgeschlossen! 🎉
       </h2>
-      <p className="text-lg sm:text-xl md:text-2xl text-christmas-red mb-3">
+      <p className="text-lg sm:text-xl md:text-2xl text-christmas-gold mb-3">
         {getScoreMessage()}
       </p>
       <p className="text-base sm:text-lg text-pine-green mb-3">
         Du hast {score} von {totalQuestions} Fragen richtig beantwortet.
       </p>
       <p className="text-sm sm:text-base text-pine-green mb-4 font-semibold">
-        Aber keine Sorge! Unabhängig von deiner Punktzahl hast du die gleiche Chance, einen unserer fantastischen Weihnachtspreise zu gewinnen. Jeder Teilnehmer hat die gleiche Gewinnchance!
+        Aber keine Sorge! Unabhängig von deiner Punktzahl hast du die gleiche Chance, einen unserer fantastischen Weihnachtspreise zu gewinnen. Jeder Teilnehmer hat die gleiche Gewinnchance! 🎄🎁
       </p>
       {!showRegistration && !registrationComplete && (
         <button
           onClick={() => setShowRegistration(true)}
-          className="mt-3 bg-christmas-red text-snow-white p-2 rounded hover:bg-cranberry transition-colors text-sm sm:text-base w-full"
+          className="mt-3 bg-christmas-red text-snow-white p-2 rounded hover:bg-cranberry transition-all duration-300 transform hover:scale-105 text-sm sm:text-base w-full"
         >
-          Wirf deinen Namen in den Lostopf!
+          Wirf deinen Namen in den Lostopf! 🎅
         </button>
       )}
       {showRegistration && (
@@ -93,7 +100,7 @@ export function Registration({ score, totalQuestions }: RegistrationProps) {
                 required
               />
               <span className="text-sm text-pine-green">
-                Ich bin einverstanden, groß abzustauben!
+                Ich bin einverstanden, groß abzustauben! 🎁
               </span>
             </label>
           </div>
@@ -102,19 +109,19 @@ export function Registration({ score, totalQuestions }: RegistrationProps) {
           )}
           <button
             type="submit"
-            className="bg-christmas-green text-snow-white p-2 rounded hover:bg-pine-green transition-colors text-sm sm:text-base w-full"
+            className="bg-christmas-green text-snow-white p-2 rounded hover:bg-pine-green transition-all duration-300 transform hover:scale-105 text-sm sm:text-base w-full"
           >
-            Registrieren
+            Registrieren 🦌
           </button>
         </form>
       )}
       {registrationComplete && (
         <div className="mt-3 text-center">
           <p className="text-lg text-christmas-green font-bold">
-            Vielen Dank für deine Teilnahme!
+            Vielen Dank für deine Teilnahme! 🎉
           </p>
           <p className="text-base text-pine-green mt-2">
-          Die Verlosung findet am 12.12. um 12:12 statt (ca. 10 Mins). Ein Invite folgt. Wenn du nicht dabei sein kannst, werden wir dich per Email benachrichtigen, falls du einer der Gewinner bist. Viel Glück 🍀🦄🎅
+            Die Verlosung findet am 12.12. um 12:12 statt (ca. 10 Mins). Ein Invite folgt. Wenn du nicht dabei sein kannst, werden wir dich per Email benachrichtigen, falls du einer der Gewinner bist. Viel Glück 🍀🦄🎅
           </p>
         </div>
       )}

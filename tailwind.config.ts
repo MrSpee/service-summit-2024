@@ -19,6 +19,9 @@ const config: Config = {
       backgroundImage: {
         'christmas-pattern': "url('/christmas-pattern.png')",
       },
+      animation: {
+        'bounce-slow': 'bounce 3s infinite',
+      },
     },
   },
   plugins: [],
