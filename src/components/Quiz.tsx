@@ -9,6 +9,69 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Progress } from "@/components/ui/progress"
 import { AlertCircle } from 'lucide-react'
 
+const questions = [
+  {
+    topic: "Grundlagen",
+    question: "Größter Vorteil von Conversational AI im Kundenservice?",
+    options: [
+      "Verringerung der Anrufhäufigkeit",
+      "Automatisierung von Standardanfragen für komplexere Interaktionen",
+      "Kundenbindung durch interaktive Unterhaltung",
+      "Automatischer \"Bitte warten\"-Modus mit Musik"
+    ],
+    correctAnswer: 1,
+    tip: "Denken Sie daran: KI ist wie ein fleißiger Praktikant, der nie Kaffee trinkt, nie müde wird und immer lächelt... auch montags um 8 Uhr!"
+  },
+  {
+    topic: "Technologie",
+    question: "Häufigste Technologie für Sprachverarbeitung in Conversational AI?",
+    options: [
+      "Machine Learning-Bildanalyse",
+      "Natural Language Processing (NLP)",
+      "Echtzeit-Datenvisualisierung",
+      "Blockchain für Sprachmuster"
+    ],
+    correctAnswer: 1,
+    tip: "Stellen Sie sich vor, Sie hätten einen Supercomputer, der Ihre Witze versteht... und trotzdem darüber lacht!"
+  },
+  {
+    topic: "Anwendungen",
+    question: "Wo verbessert Conversational AI die Kundenerfahrung am meisten?",
+    options: [
+      "Automatisierte Wettervorhersagen",
+      "Effizientes Kundenservice-Management",
+      "Erstellung von Finanzberichten",
+      "Steuerung logistischer Prozesse"
+    ],
+    correctAnswer: 1,
+    tip: "Denken Sie an den Bereich, wo Menschen am verzweifeltsten nach Hilfe suchen... nein, nicht beim Zusammenbauen von IKEA-Möbeln!"
+  },
+  {
+    topic: "Implementierung",
+    question: "Wichtigster Aspekt bei der Wahl eines Conversational AI-Partners?",
+    options: [
+      "Branchenreputation",
+      "Anzahl der Zertifikate",
+      "Verfügbarkeit für Schulungen",
+      "Fähigkeit zu umfassenden End-to-End-Lösungen"
+    ],
+    correctAnswer: 3,
+    tip: "Suchen Sie jemanden, der Ihr Projekt von A bis Z begleitet... nicht nur jemanden, der Ihnen beibringt, wie man 'Hallo Welt!' auf KI-isch sagt!"
+  },
+  {
+    topic: "Agentic AI",
+    question: "Was kann Cognigy's Agentic AI NICHT?",
+    options: [
+      "Selbstständiges Analysieren und Vorschlagen",
+      "Autonome Entscheidungsfindung und Tool-Nutzung",
+      "Kollaboration mit KI-Agenten und Menschen",
+      "Servieren von hyperpersonalisiertem Kaffee"
+    ],
+    correctAnswer: 3,
+    tip: "KI kann vieles, aber manche Dinge bleiben menschlich. Zum Beispiel der Kaffee, der schmeckt, als hätte ihn ein Praktikant an seinem ersten Tag gemacht!"
+  }
+]
+
 const ProgressBar = Progress
 
 interface QuizProps {
