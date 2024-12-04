@@ -72,10 +72,13 @@ export default function Home() {
             Unser festliches BDM Community Quiz 🎄✨
           </h1>
           <p className="text-sm sm:text-base md:text-lg text-pine-green mb-4">
-            Ho ho ho, liebe BDM Community! Taucht ein in unser weihnachtliches Quizvergnügen und testet euer Festtagswissen! 🎅🏼🎁
+            Ho ho ho, liebe Alliance Manager! Ein riesiges Dankeschön von uns beiden! <br/> Ihr habt euch dieses Jahr wieder einmal reingehängt für unseren Team-Erfolg – in wenigen Tagen ist endlich Zeit für Erholung, Glühwein und Quality Time mit Familie und Freunden. <br/> Kommt gut ins neue Jahr und startet 2025 mit vollen Akkus und bester Laune. 🎉🎅🏼🎁 
           </p>
-          <p className="text-sm sm:text-base md:text-lg text-christmas-green font-semibold">
-            Macht mit und gewinnt tolle Preise! Jeder Teilnehmer hat die gleiche Chance zu gewinnen, unabhängig von der Anzahl der richtigen Antworten. 🍀🎉
+          <p className="text-sm sm:text-base md:text-lg text-christmas-green">
+          Wenn Ihr Lust habt, taucht ein in unser weihnachtliches Quizvergnügen und testet euer Festtagswissen! <br/>Macht mit und gewinnt tolle Preise! 🍀🎉
+          </p>
+          <p className="text-sm sm:text-base md:text-lg text-christmas-red font-semibold">
+          Euer Steffen & Wolfgang
           </p>
         </div>
       )}
